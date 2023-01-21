@@ -27,7 +27,7 @@ export const ScheduleListScreen = ({navigation}: ContractDetailsTabScreenProps<'
                 keyExtractor={(schedule) => schedule.id}
                 renderItem={({item}) => renderItem(item)}
             />
-            <Button title={'New schedule'}/>
+            <Button title={'New schedule'} onPress={() => navigation.push('ScheduleNew')}/>
         </View>
     );
 }

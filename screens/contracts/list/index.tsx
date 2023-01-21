@@ -4,6 +4,7 @@ import {Contract, RootStackScreenProps} from "../../../types";
 import {useSelector} from "react-redux";
 import {selectContracts} from "../../../state/features/contractsSlice";
 import {ListItem} from "@rneui/themed";
+import {Button} from "@rneui/base";
 
 export const ContractListScreen = ({navigation}: RootStackScreenProps<'ContractList'>) => {
 
@@ -29,6 +30,7 @@ export const ContractListScreen = ({navigation}: RootStackScreenProps<'ContractL
                 keyExtractor={(contract) => contract.id}
                 renderItem={({item}) => renderItem(item)}
             />
+            <Button title={'New contract'} onPress={() => navigation.push('ContractNew')}/>
         </View>
     );
 }
