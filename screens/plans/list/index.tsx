@@ -4,6 +4,7 @@ import {ContractDetailsTabScreenProps} from "../../../types";
 import {useSelector} from "react-redux";
 import {selectPlans} from "../../../state/features/plansSlice";
 import {Plan} from "../../../types/plans";
+import {ListItem} from "@rneui/themed";
 
 export const PlanListScreen = ({navigation}: ContractDetailsTabScreenProps<'PlanList'>) => {
 
@@ -11,7 +12,11 @@ export const PlanListScreen = ({navigation}: ContractDetailsTabScreenProps<'Plan
 
     const renderItem = (plan: Plan) => {
         return <TouchableOpacity onPress={() => navigation.push('PlanDetails', {plan})}>
-            <Text style={styles.item}>{plan.id}</Text>
+            <ListItem bottomDivider>
+                <ListItem.Content>
+                    <Text style={styles.item}>{plan.id}</Text>
+                </ListItem.Content>
+            </ListItem>
         </TouchableOpacity>
     }
 

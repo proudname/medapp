@@ -37,7 +37,9 @@ const styles = StyleSheet.create({
         marginTop: 40,
         backgroundColor: "#FF1493",
     },
-    loginText: {}
+    loginText: {
+        color: '#fff'
+    }
 });
 
 export default styles;

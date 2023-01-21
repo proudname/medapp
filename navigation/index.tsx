@@ -8,13 +8,13 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DarkTheme, DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
-import {Button, ColorSchemeName, Pressable} from 'react-native';
+import {Button, ColorSchemeName} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import {ContractDetailsTabParamList, RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types';
+import {ContractDetailsTabParamList, RootStackParamList, RootTabParamList} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import LoginScreen from "../screens/sign-in";
 import SignUpScreen from "../screens/sign-up";
@@ -122,27 +122,21 @@ function BottomTabNavigator() {
             initialRouteName="SignInScreen"
             screenOptions={{
                 tabBarActiveTintColor: Colors[colorScheme].tint,
+                tabBarLabelStyle: {
+                    fontSize: 14,
+                    marginVertical: 5
+                },
+                tabBarStyle: {
+                    height: 70,
+                    padding: 5,
+                }
             }}>
             <BottomTab.Screen
                 name="SignInScreen"
                 component={LoginScreen}
-                options={({navigation}: RootTabScreenProps<'SignInScreen'>) => ({
+                options={() => ({
                     title: 'Sign In',
-                    tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
-                    headerRight: () => (
-                        <Pressable
-                            onPress={() => navigation.navigate('Modal')}
-                            style={({pressed}) => ({
-                                opacity: pressed ? 0.5 : 1,
-                            })}>
-                            <FontAwesome
-                                name="info-circle"
-                                size={25}
-                                color={Colors[colorScheme].text}
-                                style={{marginRight: 15}}
-                            />
-                        </Pressable>
-                    ),
+                    tabBarIcon: ({color}) => <TabBarIcon name="user" color={color}/>,
                 })}
             />
             <BottomTab.Screen
@@ -150,7 +144,7 @@ function BottomTabNavigator() {
                 component={SignUpScreen}
                 options={{
                     title: 'Sign Up',
-                    tabBarIcon: ({color}) => <TabBarIcon name="code" color={color}/>,
+                    tabBarIcon: ({color}) => <TabBarIcon name="users" color={color}/>,
                 }}
             />
         </BottomTab.Navigator>
