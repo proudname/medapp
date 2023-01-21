@@ -31,7 +31,7 @@ const SignInScreen = ({navigation}: RootTabScreenProps<'SignInScreen'>) => {
             <TouchableOpacity>
                 <Text style={styles.forgot_button}>Forgot Password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.push('Contracts')} style={styles.loginBtn}>
+            <TouchableOpacity onPress={() => navigation.push('ContractList')} style={styles.loginBtn}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
         </View>

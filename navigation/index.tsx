@@ -8,18 +8,19 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DarkTheme, DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
-import {ColorSchemeName, Pressable} from 'react-native';
+import {Button, ColorSchemeName, Pressable} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types';
+import {ContractDetailsTabParamList, RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import LoginScreen from "../screens/sign-in";
 import SignUpScreen from "../screens/sign-up";
-import {ContractsScreen} from "../screens/contracts";
-import {ContractScreen} from "../screens/contract";
+import {ContractDetailsScreen, ContractListScreen, ContractNewScreen} from "../screens/contracts";
+import {ScheduleDetailsScreen, ScheduleListScreen, ScheduleNewScreen} from "../screens/schedules";
+import {PlanDetailsScreen, PlanListScreen} from "../screens/plans";
 
 export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName }) {
     return (
@@ -39,17 +40,71 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={({navigation}) => ({
+            headerRight: (props) => <Button title={'Logout'}
+                                            onPress={() => navigation.navigate('SignInScreen')} {...props}/>
+        })}>
             <Stack.Screen name="Root" component={BottomTabNavigator} options={{
                 headerShown: false
             }}/>
-            <Stack.Screen name="Contracts" component={ContractsScreen}/>
-            <Stack.Screen name="Contract" component={ContractScreen}/>
+            <Stack.Screen name="ContractList" component={ContractListScreen} options={{
+                headerTitle: 'Contract list'
+            }}/>
+            <Stack.Screen name="ContractDetailsTab" component={ContractDetailsTabNavigator}/>
+            <Stack.Screen name="ContractNew" component={ContractNewScreen}/>
+            <Stack.Screen name="ScheduleNew" component={ScheduleNewScreen}/>
+            <Stack.Screen name="ScheduleDetails" component={ScheduleDetailsScreen}/>
+            <Stack.Screen name="PlanDetails" component={PlanDetailsScreen}/>
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
             <Stack.Group screenOptions={{presentation: 'modal'}}>
-                <Stack.Screen name="Modal" component={ModalScreen}/>
+                <Stack.Screen name="Modal" component={ModalScreen} options={{
+                    headerShown: false
+                }}/>
             </Stack.Group>
         </Stack.Navigator>
+    );
+}
+
+/**
+ * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
+ * https://reactnavigation.org/docs/bottom-tab-navigator
+ */
+const ContractDetailsTab = createBottomTabNavigator<ContractDetailsTabParamList>();
+
+function ContractDetailsTabNavigator() {
+    const colorScheme = useColorScheme();
+
+    return (
+        <ContractDetailsTab.Navigator
+            initialRouteName="ContractDetails"
+            screenOptions={{
+                tabBarActiveTintColor: Colors[colorScheme].tint,
+            }}>
+            <ContractDetailsTab.Screen
+                name="ContractDetails"
+                component={ContractDetailsScreen}
+                options={{
+                    title: 'Details',
+                    tabBarIcon: ({color}) => <TabBarIcon name="file" color={color}/>,
+                }}
+            />
+            <ContractDetailsTab.Screen
+                name="ScheduleList"
+                component={ScheduleListScreen}
+                options={{
+                    title: 'Schedules',
+                    tabBarIcon: ({color}) => <TabBarIcon name="clipboard" color={color}/>,
+                }}
+            />
+            <ContractDetailsTab.Screen
+                name="PlanList"
+                component={PlanListScreen}
+                options={{
+                    title: 'Plans',
+                    tabBarIcon: ({color}) => <TabBarIcon name="list" color={color}/>,
+                }}
+            />
+        </ContractDetailsTab.Navigator>
     );
 }
 

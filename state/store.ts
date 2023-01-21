@@ -1,9 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit'
 import contracts from "./features/contractsSlice";
+import schedules from "./features/schedulesSlice";
+import plansSlice from "./features/plansSlice";
 
 export const store = configureStore({
     reducer: {
-        contracts
+        contracts,
+        schedules,
+        plansSlice
     },
 });
 
