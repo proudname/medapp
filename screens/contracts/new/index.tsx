@@ -1,9 +1,10 @@
 import {FlatList, Image, View} from "react-native";
 import styles from "./styles";
-import {Button} from "@rneui/base";
+import {Button, Text} from "@rneui/base";
 import {useFormik} from "formik";
 import * as ImagePicker from 'expo-image-picker';
 import {useState} from "react";
+import {newContractSchema} from "../../../validation/new-contract.schema";
 
 
 export const ContractNewScreen = () => {
@@ -11,6 +12,7 @@ export const ContractNewScreen = () => {
     const [deployActive, setDeployActivity] = useState(false);
 
     const formik = useFormik<{ images: string[] }>({
+        validationSchema: newContractSchema,
         initialValues: {
             images: []
         },
@@ -22,7 +24,7 @@ export const ContractNewScreen = () => {
                 alert('Deploy failed!')
             }
             setDeployActivity(false);
-        }
+        },
     });
 
     const fetchImageFromUri = async (uri: string) => {
@@ -39,7 +41,6 @@ export const ContractNewScreen = () => {
         });
 
         if (!result.canceled) {
-            console.log(result.assets);
             await formik.setFieldValue('images', result.assets.map(asset => asset.uri));
         }
     }
@@ -47,6 +48,7 @@ export const ContractNewScreen = () => {
     return (
         <View style={styles.container}>
             <Button title="Pick the shots" onPress={pickImage}/>
+            {formik.errors.images && <Text>{formik.errors.images}</Text>}
             <FlatList
                 data={formik.values.images}
                 renderItem={

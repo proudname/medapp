@@ -42,7 +42,7 @@ function RootNavigator() {
     return (
         <Stack.Navigator screenOptions={({navigation}) => ({
             headerRight: (props) => <Button title={'Logout'}
-                                            onPress={() => navigation.navigate('SignInScreen')} {...props}/>
+                                            onPress={() => navigation.replace('Root')} {...props}/>
         })}>
             <Stack.Screen name="Root" component={BottomTabNavigator} options={{
                 headerShown: false
