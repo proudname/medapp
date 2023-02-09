@@ -44,7 +44,7 @@ function RootNavigator() {
             headerRight: (props) => <Button title={'Logout'}
                                             onPress={() => navigation.replace('Root')} {...props}/>
         })}>
-            <Stack.Screen name="Root" component={BottomTabNavigator} options={{
+            <Stack.Screen name="Root" component={AuthNavigator} options={{
                 headerShown: false
             }}/>
             <Stack.Screen name="ContractList" component={ContractListScreen} options={{
@@ -114,11 +114,11 @@ function ContractDetailsTabNavigator() {
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
-function BottomTabNavigator() {
+function AuthNavigator() {
     const colorScheme = useColorScheme();
 
     return (
-        <BottomTab.Navigator
+        <Stack.Navigator
             initialRouteName="SignInScreen"
             screenOptions={{
                 tabBarActiveTintColor: Colors[colorScheme].tint,
@@ -129,7 +129,8 @@ function BottomTabNavigator() {
                 tabBarStyle: {
                     height: 70,
                     padding: 5,
-                }
+                },
+                headerShown: false,
             }}>
             <BottomTab.Screen
                 name="SignInScreen"
@@ -147,7 +148,7 @@ function BottomTabNavigator() {
                     tabBarIcon: ({color}) => <TabBarIcon name="users" color={color}/>,
                 }}
             />
-        </BottomTab.Navigator>
+        </Stack.Navigator>
     );
 }
 

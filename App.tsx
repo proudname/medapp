@@ -7,8 +7,6 @@ import Navigation from './navigation';
 import {Provider} from "react-redux";
 import store from "./state/store";
 
-require('dotenv').config()
-
 export default function App() {
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
