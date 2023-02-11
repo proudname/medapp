@@ -463,6 +463,8 @@ export type ApiPlan = {
     }
 }
 
+export type Plan = {}
+
 export type UpdatePlanPayload = {
     items: {
         completed: boolean

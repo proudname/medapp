@@ -13,20 +13,7 @@ const linking: LinkingOptions<RootStackParamList> = {
     prefixes: [Linking.createURL('/')],
     config: {
         screens: {
-            Root: {
-                screens: {
-                    SignInScreen: {
-                        screens: {
-                            SignInScreen: 'sign-in',
-                        },
-                    },
-                    SignUpScreen: {
-                        screens: {
-                            SignUpScreen: 'sign-up',
-                        },
-                    },
-                },
-            },
+            Auth: 'authentication',
             ContractList: 'contract-list',
             ContractNew: 'contract-new',
             ScheduleDetails: 'schedules-details',

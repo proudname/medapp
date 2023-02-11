@@ -14,13 +14,12 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import {ContractDetailsTabParamList, RootStackParamList, RootTabParamList} from '../types';
+import {ContractDetailsTabParamList, RootStackParamList} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import LoginScreen from "../screens/sign-in";
-import SignUpScreen from "../screens/sign-up";
 import {ContractDetailsScreen, ContractListScreen, ContractNewScreen} from "../screens/contracts";
 import {ScheduleDetailsScreen, ScheduleListScreen, ScheduleNewScreen} from "../screens/schedules";
 import {PlanDetailsScreen, PlanListScreen} from "../screens/plans";
+import AuthenticationScreen from "../screens/AuthScreen";
 
 export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName }) {
     return (
@@ -44,7 +43,7 @@ function RootNavigator() {
             headerRight: (props) => <Button title={'Logout'}
                                             onPress={() => navigation.replace('Root')} {...props}/>
         })}>
-            <Stack.Screen name="Root" component={AuthNavigator} options={{
+            <Stack.Screen name="Auth" component={AuthenticationScreen} options={{
                 headerShown: false
             }}/>
             <Stack.Screen name="ContractList" component={ContractListScreen} options={{
@@ -105,50 +104,6 @@ function ContractDetailsTabNavigator() {
                 }}
             />
         </ContractDetailsTab.Navigator>
-    );
-}
-
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
-
-function AuthNavigator() {
-    const colorScheme = useColorScheme();
-
-    return (
-        <Stack.Navigator
-            initialRouteName="SignInScreen"
-            screenOptions={{
-                tabBarActiveTintColor: Colors[colorScheme].tint,
-                tabBarLabelStyle: {
-                    fontSize: 14,
-                    marginVertical: 5
-                },
-                tabBarStyle: {
-                    height: 70,
-                    padding: 5,
-                },
-                headerShown: false,
-            }}>
-            <BottomTab.Screen
-                name="SignInScreen"
-                component={LoginScreen}
-                options={() => ({
-                    title: 'Sign In',
-                    tabBarIcon: ({color}) => <TabBarIcon name="user" color={color}/>,
-                })}
-            />
-            <BottomTab.Screen
-                name="SignUpScreen"
-                component={SignUpScreen}
-                options={{
-                    title: 'Sign Up',
-                    tabBarIcon: ({color}) => <TabBarIcon name="users" color={color}/>,
-                }}
-            />
-        </Stack.Navigator>
     );
 }
 

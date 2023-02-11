@@ -1,9 +1,9 @@
-import {FC, ReactElement} from "react";
+import {FC, ReactNode} from "react";
 import {View} from "react-native";
 import styles from "./styles";
 
 type Props = {
-    children: ReactElement
+    children: ReactNode
 }
 
 const Screen: FC<Props> = ({children}) => {
