@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useFormik} from "formik";
-import {Image, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Image, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import styles from "./styles";
 import Theme from "../../theme";
 import {useNavigation} from "@react-navigation/native";
@@ -31,7 +31,7 @@ const SignUpTab = () => {
     })
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.spacing}/>
             <View style={styles.inputWrapper}>
                 <Image source={Theme.user} style={styles.icon}/>
@@ -75,7 +75,7 @@ const SignUpTab = () => {
                 <Text style={{color: Theme.bgWhite, fontWeight: 'bold'}}>Sign Up</Text>
             </TouchableOpacity>
 
-        </View>
+        </ScrollView>
     );
 }
 

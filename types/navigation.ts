@@ -19,6 +19,7 @@ declare global {
 
 export type RootStackParamList = {
     Auth: undefined;
+    Home: undefined;
     Modal: undefined;
     ContractList: undefined;
     ContractNew: undefined;
@@ -36,12 +37,6 @@ export type RootStackParamList = {
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList,
     Screen>;
 
-
-export type RootTabParamList = {
-    SignInScreen: undefined;
-    SignUpScreen: undefined;
-};
-
 export type ContractDetailsTabParamList = {
     ContractDetails: {
         contract: Contract
@@ -49,9 +44,6 @@ export type ContractDetailsTabParamList = {
     ScheduleList: undefined;
     PlanList: undefined;
 };
-
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<BottomTabScreenProps<RootTabParamList, Screen>,
-    NativeStackScreenProps<RootStackParamList>>;
 
 export type ContractDetailsTabScreenProps<Screen extends keyof ContractDetailsTabParamList> = CompositeScreenProps<BottomTabScreenProps<ContractDetailsTabParamList, Screen>,
     NativeStackScreenProps<RootStackParamList>>;

@@ -21,7 +21,7 @@ const SignInTab = () => {
             password: ''
         },
         onSubmit: (values) => {
-            navigation.navigate('ContractList');
+            navigation.navigate('Home');
         }
     })
 

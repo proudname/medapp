@@ -20,6 +20,7 @@ import {ContractDetailsScreen, ContractListScreen, ContractNewScreen} from "../s
 import {ScheduleDetailsScreen, ScheduleListScreen, ScheduleNewScreen} from "../screens/schedules";
 import {PlanDetailsScreen, PlanListScreen} from "../screens/plans";
 import AuthenticationScreen from "../screens/AuthScreen";
+import HomeScreen from "../screens/HomeScreen";
 
 export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName }) {
     return (
@@ -44,6 +45,9 @@ function RootNavigator() {
                                             onPress={() => navigation.replace('Root')} {...props}/>
         })}>
             <Stack.Screen name="Auth" component={AuthenticationScreen} options={{
+                headerShown: false
+            }}/>
+            <Stack.Screen name="Home" component={HomeScreen} options={{
                 headerShown: false
             }}/>
             <Stack.Screen name="ContractList" component={ContractListScreen} options={{
