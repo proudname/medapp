@@ -1,4 +1,5 @@
 import {ApiResponse} from "./api";
+import {Gender} from "../enums";
 
 export type AuthResult = {
     "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
@@ -23,6 +24,10 @@ export type SignUpPayload = {
     "username": string,
     "email": string,
     "password": string
+    name: '',
+    surname: '',
+    age: 0,
+    gender: Gender.MALE
 }
 
 export type SignInResult = ApiResponse<AuthResult>

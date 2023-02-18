@@ -7,8 +7,11 @@ import {useNavigation} from "@react-navigation/native";
 import {signUpSchema} from "../../validation/sign-up.schema";
 import {Gender} from "../../enums";
 import {InputError} from "../InputError";
+import {useSignUpMutation} from "../../api";
 
 const SignUpTab = () => {
+
+    const [signUp, result] = useSignUpMutation();
 
     const navigation = useNavigation();
 
@@ -26,13 +29,25 @@ const SignUpTab = () => {
             gender: Gender.MALE
         },
         onSubmit: (values) => {
+            signUp(values)
             navigation.navigate('ContractList');
         }
     })
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.spacing}/>
+            <View style={styles.inputWrapper}>
+                <Image source={Theme.email} style={styles.icon}/>
+                <TextInput
+                    placeholderTextColor={'#7c7c7c'}
+                    placeholder="Name"
+                    style={styles.input}
+                    onChangeText={(text) => setFieldValue('name', text)}
+                />
+            </View>
+            <InputError touched={touched.name} error={errors.name}/>
+
             <View style={styles.inputWrapper}>
                 <Image source={Theme.user} style={styles.icon}/>
                 <TextInput
@@ -69,7 +84,25 @@ const SignUpTab = () => {
                            autoCapitalize={'none'}
                 />
             </View>
-            <InputError touched={touched.gender} error={errors.gender}/>
+            <InputError touched={touched.password} error={errors.password}/>
+
+            <View style={styles.inputWrapper}>
+                <Image source={Theme.lock} style={styles.icon}/>
+                <TextInput placeholderTextColor={'#7c7c7c'} placeholder="Password" style={styles.input}
+                           onChangeText={(text) => setFieldValue('password', text)}
+                           autoCapitalize={'none'}
+                />
+            </View>
+            <InputError touched={touched.password} error={errors.password}/>
+
+            <View style={styles.inputWrapper}>
+                <Image source={Theme.lock} style={styles.icon}/>
+                <TextInput placeholderTextColor={'#7c7c7c'} placeholder="Repeat password" style={styles.input}
+                           onChangeText={(text) => setFieldValue('repeatPassword', text)}
+                           autoCapitalize={'none'}
+                />
+            </View>
+            <InputError touched={touched.password} error={errors.password}/>
 
             <TouchableOpacity style={styles.mainBtn} onPress={() => handleSubmit()}>
                 <Text style={{color: Theme.bgWhite, fontWeight: 'bold'}}>Sign Up</Text>

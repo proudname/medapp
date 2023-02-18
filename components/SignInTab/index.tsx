@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useFormik} from "formik";
 import {signInSchema} from "../../validation/sign-in.schema";
 import {Image, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
@@ -6,13 +6,22 @@ import styles from "./styles";
 import Theme from "../../theme";
 import {InputError} from "../InputError";
 import {useNavigation} from "@react-navigation/native";
+import {useAuth} from "../../hooks/useAuth";
 
 const SignInTab = () => {
 
     const navigation = useNavigation();
+    const {signIn, status, isSignInProcessActive} = useAuth();
 
     const [off, setOff] = useState(true)
 
+    useEffect(() => {
+        if (status.authenticated) {
+            navigation.navigate('Home');
+        } else if (status.error) {
+            alert(status.error)
+        }
+    }, [status])
 
     const {touched, errors, setFieldValue, handleSubmit} = useFormik({
         validationSchema: signInSchema,
@@ -21,12 +30,15 @@ const SignInTab = () => {
             password: ''
         },
         onSubmit: (values) => {
-            navigation.navigate('Home');
+            signIn({
+                identifier: values.login,
+                password: values.password
+            })
         }
     })
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.spacing}/>
             <View style={styles.inputWrapper}>
                 <Image source={Theme.email} style={styles.icon}/>
@@ -34,6 +46,7 @@ const SignInTab = () => {
                     placeholderTextColor={'#7c7c7c'}
                     placeholder="Email"
                     style={styles.input}
+                    autoCapitalize={'none'}
                     onChangeText={(text) => setFieldValue('login', text)}
                 />
             </View>
@@ -60,7 +73,7 @@ const SignInTab = () => {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity onPress={() => handleSubmit()} style={styles.mainBtn}>
+            <TouchableOpacity disabled={isSignInProcessActive} onPress={() => handleSubmit()} style={styles.mainBtn}>
                 <Text style={{color: Theme.bgWhite, fontWeight: 'bold'}}>Login</Text>
             </TouchableOpacity>
 

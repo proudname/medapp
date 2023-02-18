@@ -33,6 +33,6 @@ export const plansSlice = createSlice({
     reducers: {},
 })
 
-export const selectPlans = (state: RootState) => state.plansSlice;
+export const selectPlans = (state: RootState) => state.plans;
 
 export default plansSlice.reducer
