@@ -3,7 +3,7 @@ import {Text, View} from "react-native";
 import {styles} from "./styles";
 
 type Props = {
-    touched?: boolean,
+    touched: boolean | undefined,
     error?: string;
 }
 

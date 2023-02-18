@@ -9,9 +9,10 @@ export const authApi = createApi({
     endpoints: (builder) => ({
         signUp: builder.mutation<SignUpResult, SignUpPayload>({
             query: (payload) => ({
-                url: `/api/auth/register`,
+                url: `/api/auth/local/register`,
                 method: 'POST',
                 body: payload,
+                headers: {}
             }),
         }),
         signIn: builder.mutation<SignInResult, SignInPayload>({

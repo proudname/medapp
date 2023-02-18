@@ -2,7 +2,7 @@ import {useAppSelector} from "./useAppSelector";
 import {selectToken, updateToken} from "../state/features/authSlice";
 import {useAppDispatch} from "./useAppDispatch";
 import {useEffect, useState} from "react";
-import {useMeQuery, useSignInMutation} from "../api";
+import {useMeQuery, useSignInMutation, useSignUpMutation} from "../api";
 import {get} from "lodash";
 
 type SuccessAuthStatus = {
@@ -25,7 +25,8 @@ type AuthStatus = SuccessAuthStatus | FailAuthStatus | UninitializedAuthStatus;
 export const useAuth = () => {
     const token = useAppSelector(selectToken);
     const dispatch = useAppDispatch();
-    const [signIn, {data, error: signInError, isLoading: isSignInProcessActive}] = useSignInMutation();
+    const [signIn, {data: signInData, error: signInError, isLoading: isSignInProcessActive}] = useSignInMutation();
+    const [signUp, {data: signUpData, error: signUpError, isLoading: isSignUpProcessActive}] = useSignUpMutation();
     const {data: me, refetch: refetchMeQuery, isUninitialized, error: meError} = useMeQuery();
     const [status, setStatus] = useState<AuthStatus>({
         authenticated: false,
@@ -75,8 +76,12 @@ export const useAuth = () => {
     }, [token])
 
     useEffect(() => {
-        if (data && data.jwt) setToken(data.jwt)
-    }, [data])
+        if (signInData && signInData.jwt) setToken(signInData.jwt)
+    }, [signInData])
+
+    useEffect(() => {
+        if (signUpData && signUpData.jwt) setToken(signUpData.jwt)
+    }, [signUpData])
 
     useEffect(() => {
         if (!signInError) return;
@@ -99,12 +104,35 @@ export const useAuth = () => {
         }
     }, [signInError])
 
+    useEffect(() => {
+        if (!signUpError) return;
+        const status = get(signUpError, 'data.error.status');
+
+        switch (status) {
+            case 401: {
+                setStatus({
+                    authenticated: false,
+                    error: get(signUpError, 'data.error.message', 'Validation error')
+                })
+                break;
+            }
+            default: {
+                setStatus({
+                    authenticated: false,
+                    error: 'Unknown error sign up'
+                })
+            }
+        }
+    }, [signUpError])
+
     return {
         token,
         setToken,
         signIn,
+        signUp,
         isUninitialized,
         status,
-        isSignInProcessActive
+        isSignInProcessActive,
+        isSignUpProcessActive,
     }
 }

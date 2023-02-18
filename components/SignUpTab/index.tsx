@@ -1,21 +1,27 @@
-import React, {useState} from "react";
+import React, {useEffect} from "react";
 import {useFormik} from "formik";
 import {Image, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import styles from "./styles";
 import Theme from "../../theme";
 import {useNavigation} from "@react-navigation/native";
-import {signUpSchema} from "../../validation/sign-up.schema";
 import {Gender} from "../../enums";
 import {InputError} from "../InputError";
-import {useSignUpMutation} from "../../api";
+import {useAuth} from "../../hooks/useAuth";
+import {signUpSchema} from "../../validation/sign-up.schema";
 
 const SignUpTab = () => {
 
-    const [signUp, result] = useSignUpMutation();
-
     const navigation = useNavigation();
 
-    const [off, setOff] = useState(true)
+    const {signUp, status, isSignUpProcessActive} = useAuth();
+
+    useEffect(() => {
+        if (status.authenticated) {
+            navigation.navigate('Home');
+        } else if (status.error) {
+            alert(status.error)
+        }
+    }, [status])
 
 
     const {touched, errors, setFieldValue, handleSubmit} = useFormik({
@@ -23,14 +29,15 @@ const SignUpTab = () => {
         initialValues: {
             password: '',
             repeatPassword: '',
+            username: '',
             name: '',
             surname: '',
-            age: 0,
+            birthday: new Date(),
             gender: Gender.MALE
         },
         onSubmit: (values) => {
+            values.email = values.username;
             signUp(values)
-            navigation.navigate('ContractList');
         }
     })
 
@@ -41,12 +48,12 @@ const SignUpTab = () => {
                 <Image source={Theme.email} style={styles.icon}/>
                 <TextInput
                     placeholderTextColor={'#7c7c7c'}
-                    placeholder="Name"
+                    placeholder="Email"
                     style={styles.input}
-                    onChangeText={(text) => setFieldValue('name', text)}
+                    onChangeText={(text) => setFieldValue('username', text)}
                 />
             </View>
-            <InputError touched={touched.name} error={errors.name}/>
+            <InputError touched={touched.username} error={errors.username?.toString()}/>
 
             <View style={styles.inputWrapper}>
                 <Image source={Theme.user} style={styles.icon}/>
@@ -57,25 +64,26 @@ const SignUpTab = () => {
                     onChangeText={(text) => setFieldValue('name', text)}
                 />
             </View>
-            <InputError touched={touched.name} error={errors.name}/>
-
+            <InputError touched={touched.name} error={errors.name?.toString()}/>
 
             <View style={styles.inputWrapper}>
                 <Image source={Theme.user} style={styles.icon}/>
-                <TextInput placeholderTextColor={'#7c7c7c'} placeholder="Surname" style={styles.input}
-                           onChangeText={(text) => setFieldValue('surname', text)}
-
+                <TextInput
+                    placeholderTextColor={'#7c7c7c'}
+                    placeholder="Surname"
+                    style={styles.input}
+                    onChangeText={(text) => setFieldValue('surname', text)}
                 />
             </View>
-            <InputError touched={touched.surname} error={errors.surname}/>
+            <InputError touched={touched.surname} error={errors.surname?.toString()}/>
 
             <View style={styles.inputWrapper}>
                 <Image source={Theme.cake} style={styles.icon}/>
-                <TextInput placeholderTextColor={'#7c7c7c'} placeholder="Age" style={styles.input}
-                           onChangeText={(text) => setFieldValue('age', text)}
+                <TextInput placeholderTextColor={'#7c7c7c'} placeholder="Birthday" style={styles.input}
+                           onChangeText={(text) => setFieldValue('birthday', text)}
                 />
             </View>
-            <InputError touched={touched.age} error={errors.age}/>
+            <InputError touched={!!touched.birthday} error={errors.birthday?.toString()}/>
 
             <View style={styles.inputWrapper}>
                 <Image source={Theme.gender} style={styles.icon}/>
@@ -84,7 +92,7 @@ const SignUpTab = () => {
                            autoCapitalize={'none'}
                 />
             </View>
-            <InputError touched={touched.password} error={errors.password}/>
+            <InputError touched={!!touched.gender} error={errors.gender?.toString()}/>
 
             <View style={styles.inputWrapper}>
                 <Image source={Theme.lock} style={styles.icon}/>
@@ -93,7 +101,7 @@ const SignUpTab = () => {
                            autoCapitalize={'none'}
                 />
             </View>
-            <InputError touched={touched.password} error={errors.password}/>
+            <InputError touched={touched.password} error={errors.password?.toString()}/>
 
             <View style={styles.inputWrapper}>
                 <Image source={Theme.lock} style={styles.icon}/>
@@ -102,9 +110,9 @@ const SignUpTab = () => {
                            autoCapitalize={'none'}
                 />
             </View>
-            <InputError touched={touched.password} error={errors.password}/>
+            <InputError touched={touched.repeatPassword} error={errors.repeatPassword?.toString()}/>
 
-            <TouchableOpacity style={styles.mainBtn} onPress={() => handleSubmit()}>
+            <TouchableOpacity disabled={isSignUpProcessActive} style={styles.mainBtn} onPress={() => handleSubmit()}>
                 <Text style={{color: Theme.bgWhite, fontWeight: 'bold'}}>Sign Up</Text>
             </TouchableOpacity>
 

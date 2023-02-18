@@ -3,17 +3,12 @@ import {Gender} from "../enums";
 import {extractEnumValues} from "../utils/extractEnumValues";
 
 export const signUpSchema = yup.object().shape({
-    login: yup.string()
+    username: yup.string()
         .email('Incorrect email format')
         .required('Email is a required field'),
-    name: yup.string()
-        .required('Name is a required field'),
-    surname: yup.string()
-        .required('Surname is a required field'),
-    age: yup.number()
-        .min(1, 'Age must be between 1 and 150')
-        .max(150, 'Age must be between 1 and 150')
-        .required('Age is a required field'),
+    name: yup.string().required('Name is a required field'),
+    surname: yup.string().required('Surname is a required field'),
+    birthday: yup.string().required('Birthday is a required field'),
     gender: yup.string()
         .test((value) => extractEnumValues(Gender).includes(value as any))
         .required('Gender is a required field'),
@@ -25,7 +20,7 @@ export const signUpSchema = yup.object().shape({
         'Repeat password must be the same as password',
         function (v) {
             const ref = yup.ref('password');
-            return v !== this.resolve(ref);
+            return v === this.resolve(ref);
         }
     ),
 });

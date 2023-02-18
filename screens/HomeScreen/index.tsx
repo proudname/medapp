@@ -1,17 +1,23 @@
-import React, {useState} from "react";
+import React from "react";
 import {Image, ScrollView, StyleSheet, TouchableOpacity, View} from "react-native";
 import Theme from "../../theme";
 import HorizontalCard from "../../components/HorizontalCard";
 import Screen from "../../components/screen";
+import {useAuth} from "../../hooks/useAuth";
+import {useNavigation} from "@react-navigation/native";
 
 export default function HomeScreen() {
-    const [toggleView, setToggleView] = useState(false)
+    const {setToken} = useAuth();
+    const navigation = useNavigation();
 
     return (
         <Screen>
             <View style={styles.header}>
                 <Image source={Theme.logo} style={styles.logo}/>
-                <TouchableOpacity onPress={() => setToggleView(!toggleView)} style={styles.settingsContainer}>
+                <TouchableOpacity onPress={() => {
+                    setToken(null);
+                    navigation.navigate('Auth')
+                }} style={styles.settingsContainer}>
                     <Image source={Theme.settings} style={styles.settings}/>
                 </TouchableOpacity>
             </View>
