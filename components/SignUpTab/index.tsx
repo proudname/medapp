@@ -11,6 +11,7 @@ import {signUpSchema} from "../../validation/sign-up.schema";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import SelectDropdown from 'react-native-select-dropdown'
 import {extractEnumValues} from "../../utils/extractEnumValues";
+import {toast} from "../../utils/toast";
 
 const SignUpTab = () => {
 
@@ -22,7 +23,7 @@ const SignUpTab = () => {
         if (status.authenticated) {
             navigation.navigate('Home');
         } else if (status.error) {
-            alert(status.error)
+            toast(status.error, 'error')
         }
     }, [status])
 
@@ -39,9 +40,10 @@ const SignUpTab = () => {
             gender: Gender.MALE
         },
         onSubmit: (values) => {
-            values.email = values.username;
-            console.log(values)
-            signUp(values)
+            signUp({
+                email: values.username,
+                ...values
+            })
         }
     })
 

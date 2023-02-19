@@ -7,6 +7,7 @@ import Theme from "../../theme";
 import {InputError} from "../InputError";
 import {useNavigation} from "@react-navigation/native";
 import {useAuth} from "../../hooks/useAuth";
+import {toast} from "../../utils/toast";
 
 const SignInTab = () => {
 
@@ -19,7 +20,7 @@ const SignInTab = () => {
         if (status.authenticated) {
             navigation.navigate('Home');
         } else if (status.error) {
-            alert(status.error)
+            toast(status.error, 'error')
         }
     }, [status])
 

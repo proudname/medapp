@@ -5,6 +5,7 @@ import {useFormik} from "formik";
 import * as ImagePicker from 'expo-image-picker';
 import {useState} from "react";
 import {newContractSchema} from "../../../validation/new-contract.schema";
+import {toast} from "../../../utils/toast";
 
 
 export const ContractNewScreen = () => {
@@ -21,7 +22,7 @@ export const ContractNewScreen = () => {
             try {
                 await Promise.all(values.images.map(fetchImageFromUri));
             } catch (e) {
-                alert('Deploy failed!')
+                toast('Deploy failed!', 'error')
             }
             setDeployActivity(false);
         },

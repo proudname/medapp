@@ -24,10 +24,10 @@ export type SignUpPayload = {
     "username": string,
     "email": string,
     "password": string
-    name: '',
-    surname: '',
-    age: 0,
-    gender: Gender.MALE
+    name: string,
+    surname: string,
+    birthday: string,
+    gender: Gender
 }
 
 export type SignInResult = ApiResponse<AuthResult>
