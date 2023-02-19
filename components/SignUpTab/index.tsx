@@ -8,6 +8,9 @@ import {Gender} from "../../enums";
 import {InputError} from "../InputError";
 import {useAuth} from "../../hooks/useAuth";
 import {signUpSchema} from "../../validation/sign-up.schema";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
+import SelectDropdown from 'react-native-select-dropdown'
+import {extractEnumValues} from "../../utils/extractEnumValues";
 
 const SignUpTab = () => {
 
@@ -24,7 +27,7 @@ const SignUpTab = () => {
     }, [status])
 
 
-    const {touched, errors, setFieldValue, handleSubmit} = useFormik({
+    const {touched, errors, setFieldValue, handleSubmit, values: formikValues} = useFormik({
         validationSchema: signUpSchema,
         initialValues: {
             password: '',
@@ -32,11 +35,12 @@ const SignUpTab = () => {
             username: '',
             name: '',
             surname: '',
-            birthday: new Date(),
+            birthday: '2000-10-10',
             gender: Gender.MALE
         },
         onSubmit: (values) => {
             values.email = values.username;
+            console.log(values)
             signUp(values)
         }
     })
@@ -47,6 +51,7 @@ const SignUpTab = () => {
             <View style={styles.inputWrapper}>
                 <Image source={Theme.email} style={styles.icon}/>
                 <TextInput
+                    autoCapitalize={'none'}
                     placeholderTextColor={'#7c7c7c'}
                     placeholder="Email"
                     style={styles.input}
@@ -77,19 +82,29 @@ const SignUpTab = () => {
             </View>
             <InputError touched={touched.surname} error={errors.surname?.toString()}/>
 
-            <View style={styles.inputWrapper}>
-                <Image source={Theme.cake} style={styles.icon}/>
-                <TextInput placeholderTextColor={'#7c7c7c'} placeholder="Birthday" style={styles.input}
-                           onChangeText={(text) => setFieldValue('birthday', text)}
-                />
-            </View>
-            <InputError touched={!!touched.birthday} error={errors.birthday?.toString()}/>
-
-            <View style={styles.inputWrapper}>
+            <View style={[styles.inputWrapper, {paddingVertical: 0}]}>
                 <Image source={Theme.gender} style={styles.icon}/>
-                <TextInput placeholderTextColor={'#7c7c7c'} placeholder="Select Gender" style={styles.input}
-                           onChangeText={(text) => setFieldValue('gender', text)}
-                           autoCapitalize={'none'}
+                <SelectDropdown
+                    defaultValue={formikValues.gender}
+                    searchPlaceHolderColor={'#7c7c7c'} searchPlaceHolder="Select Gender"
+                    data={extractEnumValues(Gender)}
+                    onSelect={(text) => setFieldValue('gender', text)}
+                    dropdownStyle={{
+                        maxWidth: 200
+                    }}
+                    buttonStyle={{
+                        backgroundColor: 'transparent',
+                        paddingVertical: 0,
+                        height: 58,
+                        justifyContent: 'flex-start',
+                        width: '100%'
+                    }}
+                    buttonTextStyle={{
+                        marginHorizontal: 7,
+                        textAlign: 'left'
+                    }}
+                    onChangeSearchInputText={() => {
+                    }}
                 />
             </View>
             <InputError touched={!!touched.gender} error={errors.gender?.toString()}/>
@@ -105,12 +120,24 @@ const SignUpTab = () => {
 
             <View style={styles.inputWrapper}>
                 <Image source={Theme.lock} style={styles.icon}/>
+
                 <TextInput placeholderTextColor={'#7c7c7c'} placeholder="Repeat password" style={styles.input}
                            onChangeText={(text) => setFieldValue('repeatPassword', text)}
                            autoCapitalize={'none'}
                 />
             </View>
             <InputError touched={touched.repeatPassword} error={errors.repeatPassword?.toString()}/>
+
+            <View style={styles.birthdayInputWrapper}>
+                <Image source={Theme.cake} style={styles.icon}/>
+                <View style={styles.datepicker}>
+                    <RNDateTimePicker
+                        placeholderText="select date"
+                        value={new Date(formikValues.birthday)}
+                        onChange={(_, date) => setFieldValue('birthday', date?.toISOString())}/>
+                </View>
+            </View>
+            <InputError touched={!!touched.birthday} error={errors.birthday?.toString()}/>
 
             <TouchableOpacity disabled={isSignUpProcessActive} style={styles.mainBtn} onPress={() => handleSubmit()}>
                 <Text style={{color: Theme.bgWhite, fontWeight: 'bold'}}>Sign Up</Text>

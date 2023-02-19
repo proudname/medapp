@@ -18,6 +18,13 @@ const styles = StyleSheet.create({
         paddingVertical: 18,
         borderRadius: 10,
     },
+    birthdayInputWrapper: {
+        paddingHorizontal: 20,
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingVertical: 18,
+        borderRadius: 10,
+    },
     icon: {
         height: 25,
         width: 25,
@@ -53,6 +60,10 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         right: 25
+    },
+    datepicker: {
+        textAlign: 'left',
+        justifyContent: 'flex-end'
     }
 });
 
