@@ -41,7 +41,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     return (
-        <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={'Auth'}>
+        <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={'Home'}>
             <Stack.Screen name="Auth" component={AuthenticationScreen}/>
             <Stack.Screen name="Home" component={HomeScreen}/>
             <Stack.Screen name="ScheduleNew" component={ScheduleNewScreen}/>

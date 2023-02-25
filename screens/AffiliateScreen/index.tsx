@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {FlatList, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, Share, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {AntDesign, Feather} from '@expo/vector-icons';
 import MaskedView from '@react-native-masked-view/masked-view';
@@ -75,70 +75,66 @@ export default function AffiliateScreen() {
         <Screen>
             <CommonHeader title={'My Bonuses'} leftIconType={'back'}/>
             <View style={styles.content}>
-                <ScrollView contentContainerStyle={{padding: 25}}>
+                <FlatList
+                    contentContainerStyle={{padding: 25}}
+                    ListHeaderComponent={<View>
+                        <View style={[styles.whiteWrapper, styles.shadowProp]}>
+                            <Text style={styles.label}>Total</Text>
+                            <MaskedView
+                                style={{height: 40, marginLeft: 10}}
+                                maskElement={<Text style={styles.number}>0</Text>}
+                            >
+                                <LinearGradient
+                                    colors={['#EA717E', '#CF3642']}
+                                    start={{x: 0, y: 0.1}} end={{x: 1, y: 0.25}}
+                                    style={{flex: 1}}
+                                />
+                            </MaskedView>
 
-                    <View style={[styles.whiteWrapper, styles.shadowProp]}>
-                        <Text style={styles.label}>Total</Text>
-                        <MaskedView
-                            style={{height: 40, marginLeft: 10}}
-                            maskElement={<Text style={styles.number}>0</Text>}
-                        >
-                            <LinearGradient
-                                colors={['#EA717E', '#CF3642']}
-                                start={{x: 0, y: 0.1}} end={{x: 1, y: 0.25}}
-                                style={{flex: 1}}
-                            />
-                        </MaskedView>
-
-                    </View>
-
-                    <View style={{
-                        height: 170,
-                        justifyContent: 'space-between',
-                        flexDirection: 'column'
-                    }}>
-                        <View>
-                            <Text style={{opacity: 0.6, marginBottom: 5}}>My Code / Link</Text>
-                            <View style={styles.codelinkWrapper}>
-                                <Text style={styles.linkText}>bhy7d89f3o2jf9o87u3j4ikid43t</Text>
-                                <TouchableOpacity style={styles.copyBtn} onPress={handleRefCopy}>
-                                    <Feather name="copy" size={18} color="white"/>
-                                </TouchableOpacity>
-                            </View>
                         </View>
 
-                        <View>
-                            <Text style={{opacity: 0.6, marginBottom: 5}}>My Promo</Text>
-                            <View style={styles.codelinkWrapper}>
-                                <Text style={styles.linkText}>3o2jf9o87</Text>
-                                <View style={{
-                                    flexDirection: 'row',
-                                    width: 80,
-                                    justifyContent: 'space-between'
-                                }}>
-                                    <TouchableOpacity style={styles.copyBtn} onPress={handlePromoCopy}>
+                        <View style={{
+                            height: 170,
+                            justifyContent: 'space-between',
+                            flexDirection: 'column'
+                        }}>
+                            <View>
+                                <Text style={{opacity: 0.6, marginBottom: 5}}>My Code / Link</Text>
+                                <View style={styles.codelinkWrapper}>
+                                    <Text style={styles.linkText}>bhy7d89f3o2jf9o87u3j4ikid43t</Text>
+                                    <TouchableOpacity style={styles.copyBtn} onPress={handleRefCopy}>
                                         <Feather name="copy" size={18} color="white"/>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.copyBtn} onPress={handlePromoShare}>
-                                        <AntDesign name="sharealt" size={18} color="white"/>
-                                    </TouchableOpacity>
+                                </View>
+                            </View>
+
+                            <View>
+                                <Text style={{opacity: 0.6, marginBottom: 5}}>My Promo</Text>
+                                <View style={styles.codelinkWrapper}>
+                                    <Text style={styles.linkText}>3o2jf9o87</Text>
+                                    <View style={{
+                                        flexDirection: 'row',
+                                        width: 80,
+                                        justifyContent: 'space-between'
+                                    }}>
+                                        <TouchableOpacity style={styles.copyBtn} onPress={handlePromoCopy}>
+                                            <Feather name="copy" size={18} color="white"/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.copyBtn} onPress={handlePromoShare}>
+                                            <AntDesign name="sharealt" size={18} color="white"/>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             </View>
                         </View>
 
-                    </View>
-
-                    <Text style={styles.bigLabel}>Bonuses History</Text>
-
-
-                    <FlatList
-                        data={data}
-                        renderItem={({item}) => <InfoCard bigText={item.amount} date={item.date}
-                                                          description={item.description} active={item.active}/>}
-                        keyExtractor={item => item.id}
-                    />
-
-                </ScrollView>
+                        <Text style={styles.bigLabel}>Bonuses History</Text>
+                    </View>}
+                    data={data}
+                    renderItem={({item}) => <InfoCard bigText={item.amount} date={item.date}
+                                                      description={item.description} active={item.active}/>}
+                    keyExtractor={item => item.id}
+                />
             </View>
 
         </Screen>
