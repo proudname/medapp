@@ -4,11 +4,10 @@
  */
 
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {CompositeScreenProps, NavigatorScreenParams} from '@react-navigation/native';
+import {CompositeScreenProps} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Contract} from './contracts';
 import {Schedule} from "./schedules";
-import {Plan} from "./plans";
 
 declare global {
     namespace ReactNavigation {
@@ -21,17 +20,12 @@ export type RootStackParamList = {
     Auth: undefined;
     Home: undefined;
     Modal: undefined;
-    ContractList: undefined;
-    ContractNew: undefined;
-    ContractDetailsTab: NavigatorScreenParams<ContractDetailsTabParamList> | undefined;
     ScheduleDetails: {
         schedule: Schedule
     },
     ScheduleNew: undefined,
-    PlanDetails: {
-        plan: Plan
-    },
     PlanList: undefined,
+    Affiliate: undefined,
     NotFound: undefined;
 };
 

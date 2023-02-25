@@ -16,11 +16,12 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import {ContractDetailsTabParamList, RootStackParamList} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import {ContractDetailsScreen, ContractListScreen, ContractNewScreen} from "../screens/contracts";
+import {ContractDetailsScreen} from "../screens/contracts";
 import {ScheduleDetailsScreen, ScheduleListScreen, ScheduleNewScreen} from "../screens/schedules";
-import {PlanDetailsScreen, PlanListScreen} from "../screens/plans";
+import {PlanListScreen} from "../screens/plans";
 import AuthenticationScreen from "../screens/AuthScreen";
 import HomeScreen from "../screens/HomeScreen";
+import AffiliateScreen from "../screens/AffiliateScreen";
 
 export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName }) {
     return (
@@ -50,15 +51,12 @@ function RootNavigator() {
             <Stack.Screen name="Home" component={HomeScreen} options={{
                 headerShown: false
             }}/>
-            <Stack.Screen name="ContractList" component={ContractListScreen} options={{
-                headerTitle: 'Contract list'
-            }}/>
-            <Stack.Screen name="ContractDetailsTab" component={ContractDetailsTabNavigator}/>
-            <Stack.Screen name="ContractNew" component={ContractNewScreen}/>
             <Stack.Screen name="ScheduleNew" component={ScheduleNewScreen}/>
             <Stack.Screen name="ScheduleDetails" component={ScheduleDetailsScreen}/>
-            <Stack.Screen name="PlanDetails" component={PlanDetailsScreen}/>
             <Stack.Screen name="PlanList" component={PlanListScreen} options={{
+                headerShown: false
+            }}/>
+            <Stack.Screen name="Affiliate" component={AffiliateScreen} options={{
                 headerShown: false
             }}/>
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>

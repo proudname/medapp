@@ -23,7 +23,6 @@ export default function HomeScreen() {
             </View>
             <View style={styles.contentWrapper}>
 
-
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.content}>
 
@@ -35,7 +34,7 @@ export default function HomeScreen() {
                         <HorizontalCard navTo={'MyBalanceScreen'} artwork={Theme.moneybag} word1={'My'}
                                         word2={'Balance'}
                                         color1={'#A86AF6'} color2={'#1A2A99'}/>
-                        <HorizontalCard navTo={'MyBonusesScreen'} artwork={Theme.biggift} word1={'My'}
+                        <HorizontalCard navTo={'Affiliate'} artwork={Theme.biggift} word1={'My'}
                                         word2={'Affiliate'}
                                         color1={'#E79035'} color2={'#FDBE00'}/>
                     </View>
