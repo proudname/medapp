@@ -91,7 +91,7 @@ export const useAuth = () => {
         const status = get(signInError, 'data.error.status');
 
         switch (status) {
-            case 401: {
+            case 400: {
                 setStatus({
                     authenticated: false,
                     error: get(signInError, 'data.error.message', 'Validation error')
@@ -99,6 +99,7 @@ export const useAuth = () => {
                 break;
             }
             default: {
+                console.log(signInError);
                 setStatus({
                     authenticated: false,
                     error: 'Unknown error sign in'
@@ -109,7 +110,6 @@ export const useAuth = () => {
 
     useEffect(() => {
         if (!signUpError) return;
-        console.log(signUpError)
         const status = get(signUpError, 'data.error.status');
 
         switch (status) {

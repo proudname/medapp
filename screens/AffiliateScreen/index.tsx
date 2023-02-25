@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {FlatList, Image, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import {AntDesign, Feather} from '@expo/vector-icons';
 import MaskedView from '@react-native-masked-view/masked-view';
@@ -10,6 +10,8 @@ import Theme from "../../theme";
 import {useAppNavigation} from "../../hooks/useAppNavigation";
 import {toast} from "../../utils/toast";
 import * as Clipboard from 'expo-clipboard';
+import {CommonHeader} from "../../components/CommonHeader";
+import Screen from "../../components/Screen";
 
 //sample data for the card week
 const data = [
@@ -70,16 +72,8 @@ export default function AffiliateScreen() {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.settingsContainer}>
-                    <AntDesign name="arrowleft" size={24} color="#fff"/>
-                </TouchableOpacity>
-                <Text style={styles.heading}>My Bonuses</Text>
-                <TouchableOpacity style={styles.settingsContainer}>
-                    <Image source={Theme.settings} style={styles.settings}/>
-                </TouchableOpacity>
-            </View>
+        <Screen>
+            <CommonHeader title={'My Bonuses'} leftIconType={'back'}/>
             <View style={styles.content}>
                 <ScrollView contentContainerStyle={{padding: 25}}>
 
@@ -147,7 +141,7 @@ export default function AffiliateScreen() {
                 </ScrollView>
             </View>
 
-        </View>
+        </Screen>
     )
 }
 

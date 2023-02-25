@@ -8,7 +8,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DarkTheme, DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
-import {Button, ColorSchemeName} from 'react-native';
+import {ColorSchemeName} from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -41,24 +41,13 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     return (
-        <Stack.Navigator screenOptions={({navigation}) => ({
-            headerRight: (props) => <Button title={'Logout'}
-                                            onPress={() => navigation.replace('Root')} {...props}/>
-        })}>
-            <Stack.Screen name="Auth" component={AuthenticationScreen} options={{
-                headerShown: false
-            }}/>
-            <Stack.Screen name="Home" component={HomeScreen} options={{
-                headerShown: false
-            }}/>
+        <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={'Auth'}>
+            <Stack.Screen name="Auth" component={AuthenticationScreen}/>
+            <Stack.Screen name="Home" component={HomeScreen}/>
             <Stack.Screen name="ScheduleNew" component={ScheduleNewScreen}/>
             <Stack.Screen name="ScheduleDetails" component={ScheduleDetailsScreen}/>
-            <Stack.Screen name="PlanList" component={PlanListScreen} options={{
-                headerShown: false
-            }}/>
-            <Stack.Screen name="Affiliate" component={AffiliateScreen} options={{
-                headerShown: false
-            }}/>
+            <Stack.Screen name="PlanList" component={PlanListScreen}/>
+            <Stack.Screen name="Affiliate" component={AffiliateScreen}/>
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
             <Stack.Group screenOptions={{presentation: 'modal'}}>
                 <Stack.Screen name="Modal" component={ModalScreen} options={{

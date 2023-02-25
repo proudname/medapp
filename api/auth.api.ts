@@ -20,6 +20,7 @@ export const authApi = createApi({
                 url: `/api/auth/local`,
                 method: 'POST',
                 body: payload,
+                headers: {}
             }),
         }),
         me: builder.query<SignInResult, void>({
