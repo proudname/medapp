@@ -28,7 +28,7 @@ export default function HomeScreen() {
                     <View style={styles.content}>
 
 
-                        <HorizontalCard navTo={'MyTreatmentScreen'} artwork={Theme.refreshdrop} word1={'My'}
+                        <HorizontalCard navTo={'PlanList'} artwork={Theme.refreshdrop} word1={'My'}
                                         word2={'Treatment'} color1={'#EA717E'} color2={'#CF3642'}/>
                         <HorizontalCard navTo={'MyAppointmentsScreen'} artwork={Theme.bigcalander} word1={'My'}
                                         word2={'Appointments'} color1={'#ADA4DF'} color2={'#9F4EF5'}/>

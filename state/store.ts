@@ -1,20 +1,19 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import contracts from "./features/contractsSlice";
 import schedules from "./features/schedulesSlice";
-import plans from "./features/plansSlice";
 import auth from "./features/authSlice";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistReducer, persistStore} from 'redux-persist'
 import {PersistConfig} from "redux-persist/es/types";
-import {authApi} from "../api";
+import {authApi, plansApi} from "../api";
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
 
 const rootReducer = combineReducers({
     contracts,
     schedules,
-    plans,
     auth,
-    [authApi.reducerPath]: authApi.reducer
+    [authApi.reducerPath]: authApi.reducer,
+    [plansApi.reducerPath]: plansApi.reducer
 })
 
 const persistConfig: PersistConfig<any> = {
@@ -32,7 +31,7 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             }
-        }).concat(authApi.middleware),
+        }).concat(authApi.middleware, plansApi.middleware),
 });
 
 export const persistor = persistStore(store);

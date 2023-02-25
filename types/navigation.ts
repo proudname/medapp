@@ -31,6 +31,7 @@ export type RootStackParamList = {
     PlanDetails: {
         plan: Plan
     },
+    PlanList: undefined,
     NotFound: undefined;
 };
 
