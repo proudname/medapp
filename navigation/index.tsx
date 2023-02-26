@@ -11,12 +11,12 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import {RootStackParamList} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import {ScheduleDetailsScreen, ScheduleNewScreen} from "../screens/schedules";
-import {PlanListScreen} from "../screens/plans";
+import PlanListScreen from "../screens/PlanListScreen";
 import AuthenticationScreen from "../screens/AuthScreen";
 import HomeScreen from "../screens/HomeScreen";
 import AffiliateScreen from "../screens/AffiliateScreen";
 import BalanceScreen from "../screens/BalanceScreen";
+import ScheduleListScreen from "../screens/SheduleList";
 
 export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName }) {
     return (
@@ -39,8 +39,7 @@ function RootNavigator() {
         <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={'Home'}>
             <Stack.Screen name="Auth" component={AuthenticationScreen}/>
             <Stack.Screen name="Home" component={HomeScreen}/>
-            <Stack.Screen name="ScheduleNew" component={ScheduleNewScreen}/>
-            <Stack.Screen name="ScheduleDetails" component={ScheduleDetailsScreen}/>
+            <Stack.Screen name="ScheduleList" component={ScheduleListScreen}/>
             <Stack.Screen name="PlanList" component={PlanListScreen}/>
             <Stack.Screen name="Affiliate" component={AffiliateScreen}/>
             <Stack.Screen name="Balance" component={BalanceScreen}/>

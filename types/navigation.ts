@@ -4,7 +4,6 @@
  */
 
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Schedule} from "./schedules";
 
 declare global {
     namespace ReactNavigation {
@@ -17,10 +16,7 @@ export type RootStackParamList = {
     Auth: undefined;
     Home: undefined;
     Modal: undefined;
-    ScheduleDetails: {
-        schedule: Schedule
-    },
-    ScheduleNew: undefined,
+    ScheduleList: undefined,
     PlanList: undefined,
     Affiliate: undefined,
     Balance: undefined,

@@ -1,10 +1,10 @@
 import {FlatList, View} from "react-native";
 import styles from "./styles";
-import WeekCard from "../../../components/WeekCard";
-import {useGetPlansQuery} from "../../../api";
-import {useError} from "../../../hooks/useError";
-import Screen from "../../../components/Screen";
-import {CommonHeader} from "../../../components/CommonHeader";
+import WeekCard from "../../components/WeekCard";
+import {useGetPlansQuery} from "../../api";
+import {useError} from "../../hooks/useError";
+import Screen from "../../components/Screen";
+import {CommonHeader} from "../../components/CommonHeader";
 
 export const PlanListScreen = () => {
 

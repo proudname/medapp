@@ -16,6 +16,7 @@ const linking: LinkingOptions<RootStackParamList> = {
             Auth: 'authentication',
             Home: 'home',
             PlanList: 'plans-list',
+            ScheduleList: 'schedule-list',
             Affiliate: 'affiliate',
             Balance: 'balance',
             Modal: 'modal',
