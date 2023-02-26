@@ -20,7 +20,7 @@ export default function HomeScreen() {
                                         word2={'Treatment'} color1={'#EA717E'} color2={'#CF3642'}/>
                         <HorizontalCard navTo={'MyAppointmentsScreen'} artwork={Theme.bigcalander} word1={'My'}
                                         word2={'Appointments'} color1={'#ADA4DF'} color2={'#9F4EF5'}/>
-                        <HorizontalCard navTo={'MyBalanceScreen'} artwork={Theme.moneybag} word1={'My'}
+                        <HorizontalCard navTo={'Balance'} artwork={Theme.moneybag} word1={'My'}
                                         word2={'Balance'}
                                         color1={'#A86AF6'} color2={'#1A2A99'}/>
                         <HorizontalCard navTo={'Affiliate'} artwork={Theme.biggift} word1={'My'}

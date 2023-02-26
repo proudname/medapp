@@ -17,6 +17,7 @@ const linking: LinkingOptions<RootStackParamList> = {
             Home: 'home',
             PlanList: 'plans-list',
             Affiliate: 'affiliate',
+            Balance: 'balance',
             Modal: 'modal',
             NotFound: '*',
         },
