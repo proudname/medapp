@@ -20,6 +20,7 @@ const linking: LinkingOptions<RootStackParamList> = {
             Affiliate: 'affiliate',
             Balance: 'balance',
             Modal: 'modal',
+            EditAppointmentModal: 'edit-appointment-modal',
             NotFound: '*',
         },
     },

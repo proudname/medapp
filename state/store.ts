@@ -5,15 +5,18 @@ import auth from "./features/authSlice";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistReducer, persistStore} from 'redux-persist'
 import {PersistConfig} from "redux-persist/es/types";
-import {authApi, plansApi} from "../api";
+import {appointmentsApi, authApi, plansApi} from "../api";
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
+import {medicalCentersApi} from "../api/medicalCenters.api";
 
 const rootReducer = combineReducers({
     contracts,
     schedules,
     auth,
     [authApi.reducerPath]: authApi.reducer,
-    [plansApi.reducerPath]: plansApi.reducer
+    [plansApi.reducerPath]: plansApi.reducer,
+    [appointmentsApi.reducerPath]: appointmentsApi.reducer,
+    [medicalCentersApi.reducerPath]: medicalCentersApi.reducer
 })
 
 const persistConfig: PersistConfig<any> = {
@@ -31,7 +34,7 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             }
-        }).concat(authApi.middleware, plansApi.middleware),
+        }).concat(authApi.middleware, plansApi.middleware, appointmentsApi.middleware, medicalCentersApi.middleware),
 });
 
 export const persistor = persistStore(store);

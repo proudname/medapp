@@ -17,6 +17,7 @@ import HomeScreen from "../screens/HomeScreen";
 import AffiliateScreen from "../screens/AffiliateScreen";
 import BalanceScreen from "../screens/BalanceScreen";
 import ScheduleListScreen from "../screens/SheduleList";
+import EditAppointmentModalScreen from '../screens/EditAppointmentModalScreen';
 
 export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName }) {
     return (
@@ -46,6 +47,7 @@ function RootNavigator() {
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
             <Stack.Group screenOptions={{presentation: 'modal'}}>
                 <Stack.Screen name="Modal" component={ModalScreen}/>
+                <Stack.Screen name="EditAppointmentModal" component={EditAppointmentModalScreen}/>
             </Stack.Group>
         </Stack.Navigator>
     );

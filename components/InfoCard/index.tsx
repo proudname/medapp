@@ -9,9 +9,10 @@ type Props = {
     bigText: string,
     date: string,
     buttonEnabled?: boolean
+    onButtonClick?: () => void
 }
 
-export default function InfoCard({active, description, bigText, date, buttonEnabled}: Props) {
+export default function InfoCard({active, description, bigText, date, buttonEnabled, onButtonClick}: Props) {
     return (
         <View style={[styles.container, styles.shadowProp]}>
             <Text style={styles.amt}>{bigText}</Text>
@@ -19,11 +20,9 @@ export default function InfoCard({active, description, bigText, date, buttonEnab
             <Text style={styles.info}>{description}</Text>
             <View style={[styles.indicator, {backgroundColor: active ? "#29CC00" : Theme.secColor}]}/>
             {
-                buttonEnabled ?
-                    <TouchableOpacity>
-                        <Text style={styles.text}>Change</Text>
-                    </TouchableOpacity>
-                    : null
+                buttonEnabled && <TouchableOpacity onPress={onButtonClick}>
+                    <Text style={styles.text}>Change</Text>
+                </TouchableOpacity>
             }
         </View>
     )

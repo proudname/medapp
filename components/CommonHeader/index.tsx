@@ -31,7 +31,7 @@ export const CommonHeader = ({leftIconType, title}: Props) => {
 
     const renderTitle = () => {
         if (!title) return null;
-        return <Text style={styles.heading}>My Bonuses</Text>
+        return <Text style={styles.heading}>{title}</Text>
     }
 
     return <View style={styles.header}>

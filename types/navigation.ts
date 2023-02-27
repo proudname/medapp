@@ -16,6 +16,7 @@ export type RootStackParamList = {
     Auth: undefined;
     Home: undefined;
     Modal: undefined;
+    EditAppointmentModal: { editId: string | number } | undefined;
     ScheduleList: undefined,
     PlanList: undefined,
     Affiliate: undefined,
