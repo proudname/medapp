@@ -1,5 +1,5 @@
 import {createApi} from '@reduxjs/toolkit/query/react'
-import {SignInPayload, SignInResult, SignUpPayload, SignUpResult} from "../types";
+import {SignInPayload, SignInResult, SignInWithProviderPayload, SignUpPayload, SignUpResult} from "../types";
 import {apiBaseQuery} from "../utils/apiBaseQuery";
 
 // Define a service using a base URL and expected endpoints
@@ -23,6 +23,13 @@ export const authApi = createApi({
                 headers: {}
             }),
         }),
+        signInWithProvider: builder.mutation<SignInResult, SignInWithProviderPayload>({
+            query: ({provider, token}) => ({
+                url: `/api/auth/${provider}/callback?access_token=${token}`,
+                method: 'GET',
+                headers: {}
+            }),
+        }),
         me: builder.query<SignInResult, void>({
             query: () => ({
                 url: `/api/users/me`,
@@ -35,4 +42,4 @@ export const authApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useSignUpMutation, useSignInMutation, useMeQuery} = authApi
+export const {useSignUpMutation, useSignInMutation, useMeQuery, useSignInWithProviderMutation} = authApi

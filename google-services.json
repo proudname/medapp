@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "371988854427",
+    "project_id": "medapp-47f2a",
+    "storage_bucket": "medapp-47f2a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371988854427:android:d822d9f109cdaa02d3f83e",
+        "android_client_info": {
+          "package_name": "com.vittogritto.medapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371988854427-6u42t139rgus0q9a8jphsg4hfpupd8p7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5LCST8iq9TPEMxwrf_9plC2-f1XlUBb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371988854427-6u42t139rgus0q9a8jphsg4hfpupd8p7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "371988854427-epnacmjl60cv4fk6mpstjj8kdaogm4v3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vittogritto.medapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

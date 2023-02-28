@@ -20,6 +20,11 @@ export type SignInPayload = {
     "password": string
 }
 
+export type SignInWithProviderPayload = {
+    "provider": 'google',
+    "token": string
+}
+
 export type SignUpPayload = {
     "username": string,
     "email": string,

@@ -12,9 +12,10 @@ import {toast} from "../../utils/toast";
 const SignInTab = () => {
 
     const navigation = useNavigation();
-    const {signIn, status, isSignInProcessActive} = useAuth();
+    const {signIn, status, isSignInProcessActive, applyGoogleAuth} = useAuth();
 
     const [off, setOff] = useState(true)
+
 
     useEffect(() => {
         if (status.authenticated) {
@@ -80,10 +81,12 @@ const SignInTab = () => {
 
             <View style={styles.gplus}>
                 <Text>Or Create Account Using</Text>
-                <TouchableOpacity style={{marginTop: 15}}><Image source={Theme.gplus} style={{
-                    height: 50,
-                    width: 50
-                }}/></TouchableOpacity>
+                <TouchableOpacity style={{marginTop: 15}} onPress={applyGoogleAuth}>
+                    <Image source={Theme.gplus} style={{
+                        height: 50,
+                        width: 50
+                    }}/>
+                </TouchableOpacity>
 
             </View>
 

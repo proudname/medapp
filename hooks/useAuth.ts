@@ -2,8 +2,12 @@ import {useAppSelector} from "./useAppSelector";
 import {selectToken, updateToken} from "../state/features/authSlice";
 import {useAppDispatch} from "./useAppDispatch";
 import {useEffect, useState} from "react";
-import {useMeQuery, useSignInMutation, useSignUpMutation} from "../api";
+import {useMeQuery, useSignInMutation, useSignInWithProviderMutation, useSignUpMutation} from "../api";
 import {get} from "lodash";
+// import {GoogleSignin, statusCodes,} from '@react-native-google-signin/google-signin';
+import {toast} from "../utils/toast";
+
+// GoogleSignin.configure();
 
 type SuccessAuthStatus = {
     authenticated: true,
@@ -27,6 +31,10 @@ export const useAuth = () => {
     const dispatch = useAppDispatch();
     const [signIn, {data: signInData, error: signInError, isLoading: isSignInProcessActive}] = useSignInMutation();
     const [signUp, {data: signUpData, error: signUpError, isLoading: isSignUpProcessActive}] = useSignUpMutation();
+    const [signInWithProvider, {
+        data: signInWithProviderData,
+        error: signInWithProviderError
+    }] = useSignInWithProviderMutation();
     const {data: me, refetch: refetchMeQuery, isUninitialized, error: meError} = useMeQuery();
     const [status, setStatus] = useState<AuthStatus>({
         authenticated: false,
@@ -129,6 +137,45 @@ export const useAuth = () => {
         }
     }, [signUpError])
 
+    useEffect(() => {
+        if (!signInWithProviderError) return;
+        const error = get(signInWithProviderError, 'data[0].messages[0].id');
+        if (error === 'Auth.form.error.email.taken') {
+            toast('This email already taken', 'error');
+            return;
+        }
+        toast('Login cancelled', 'error');
+    }, [signInWithProviderError])
+
+    useEffect(() => {
+        if (!signInWithProviderData) return;
+        setToken(signInWithProviderData.data.jwt)
+    }, [signInWithProviderData])
+
+    const applyGoogleAuth = async () => {
+        // try {
+        //     await GoogleSignin.hasPlayServices();
+        //     const userInfo = await GoogleSignin.signIn();
+        //     const token = userInfo.idToken;
+        //     if (!token) {
+        //         toast('Token not found', 'error');
+        //         return;
+        //     }
+        //     signInWithProvider({provider: 'google', token})
+        // } catch (error: any) {
+        //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        //         // user cancelled the login flow
+        //     } else if (error.code === statusCodes.IN_PROGRESS) {
+        //         toast('Another instance of Google Auth already running', 'warn');
+        //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        //         toast('Play services not available', 'error');
+        //     } else {
+        //         toast('Google auth error', 'error');
+        //     }
+        //     console.log(error);
+        // }
+    };
+
     return {
         token,
         setToken,
@@ -138,5 +185,6 @@ export const useAuth = () => {
         status,
         isSignInProcessActive,
         isSignUpProcessActive,
+        applyGoogleAuth
     }
 }

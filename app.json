@@ -19,9 +19,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -36,7 +38,8 @@
         {
           "photosPermission": "The app accesses your photos to apply a contract form"
         }
-      ]
+      ],
+      "@react-native-google-signin/google-signin"
     ]
   }
 }
