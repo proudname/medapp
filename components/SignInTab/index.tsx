@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useFormik} from "formik";
 import {signInSchema} from "../../validation/sign-in.schema";
 import {Image, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
@@ -6,24 +6,14 @@ import styles from "./styles";
 import Theme from "../../theme";
 import {InputError} from "../InputError";
 import {useNavigation} from "@react-navigation/native";
-import {useAuth} from "../../hooks/useAuth";
-import {toast} from "../../utils/toast";
+import {useSignIn} from "../../hooks/useSignIn";
 
 const SignInTab = () => {
 
     const navigation = useNavigation();
-    const {signIn, status, isSignInProcessActive, applyGoogleAuth} = useAuth();
+    const {signIn, isSignInProcessActive} = useSignIn();
 
     const [off, setOff] = useState(true)
-
-
-    useEffect(() => {
-        if (status.authenticated) {
-            navigation.navigate('Home');
-        } else if (status.error) {
-            toast(status.error, 'error')
-        }
-    }, [status])
 
     const {touched, errors, setFieldValue, handleSubmit} = useFormik({
         validationSchema: signInSchema,
@@ -70,7 +60,7 @@ const SignInTab = () => {
             <InputError touched={touched.password} error={errors.password}/>
 
             <View style={styles.forgot}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('RestorePassword', {step: 0})}>
                     <Text style={{color: Theme.primaryColor}}>Forgot Password?</Text>
                 </TouchableOpacity>
             </View>
@@ -81,7 +71,7 @@ const SignInTab = () => {
 
             <View style={styles.gplus}>
                 <Text>Or Create Account Using</Text>
-                <TouchableOpacity style={{marginTop: 15}} onPress={applyGoogleAuth}>
+                <TouchableOpacity style={{marginTop: 15}}>
                     <Image source={Theme.gplus} style={{
                         height: 50,
                         width: 50

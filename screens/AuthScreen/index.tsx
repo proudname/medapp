@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Image, View,} from "react-native";
 import {SceneMap, TabBar, TabBarProps, TabView} from 'react-native-tab-view';
 import Theme from "../../theme";
 import SignInTab from "../../components/SignInTab";
 import SignUpTab from "../../components/SignUpTab";
 import {styles} from "./styles";
+import {useAuth} from "../../hooks/useAuth";
+import {RootStackScreenProps} from "../../types";
 
 
 const renderScene = SceneMap({
@@ -22,7 +24,15 @@ const renderTabBar = (props: TabBarProps<any>) => (
 );
 
 
-export default function AuthenticationScreen() {
+export default function AuthenticationScreen({navigation}: RootStackScreenProps<'Auth'>) {
+
+    const {token} = useAuth();
+
+    useEffect(() => {
+        if (token) {
+            navigation.navigate('Home');
+        }
+    }, [token])
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([

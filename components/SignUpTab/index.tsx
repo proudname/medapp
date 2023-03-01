@@ -1,32 +1,19 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useFormik} from "formik";
 import {Image, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
 import styles from "./styles";
 import Theme from "../../theme";
-import {useNavigation} from "@react-navigation/native";
 import {Gender} from "../../enums";
 import {InputError} from "../InputError";
-import {useAuth} from "../../hooks/useAuth";
 import {signUpSchema} from "../../validation/sign-up.schema";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import SelectDropdown from 'react-native-select-dropdown'
 import {extractEnumValues} from "../../utils/extractEnumValues";
-import {toast} from "../../utils/toast";
+import {useSignUp} from "../../hooks/useSignUp";
 
 const SignUpTab = () => {
 
-    const navigation = useNavigation();
-
-    const {signUp, status, isSignUpProcessActive} = useAuth();
-
-    useEffect(() => {
-        if (status.authenticated) {
-            navigation.navigate('Home');
-        } else if (status.error) {
-            toast(status.error, 'error')
-        }
-    }, [status])
-
+    const {signUp, isSignUpProcessActive} = useSignUp();
 
     const {touched, errors, setFieldValue, handleSubmit, values: formikValues} = useFormik({
         validationSchema: signUpSchema,

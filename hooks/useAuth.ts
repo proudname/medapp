@@ -1,141 +1,58 @@
 import {useAppSelector} from "./useAppSelector";
-import {selectToken, updateToken} from "../state/features/authSlice";
+import {clearSession, establishSession, selectAuthState} from "../state/features/authSlice";
 import {useAppDispatch} from "./useAppDispatch";
 import {useEffect, useState} from "react";
-import {useMeQuery, useSignInMutation, useSignInWithProviderMutation, useSignUpMutation} from "../api";
+import {useCheckTokenQuery, useSignInWithProviderMutation} from "../api";
 import {get} from "lodash";
 // import {GoogleSignin, statusCodes,} from '@react-native-google-signin/google-signin';
 import {toast} from "../utils/toast";
+import {useAuthError} from "./useAuthError";
 
 // GoogleSignin.configure();
 
-type SuccessAuthStatus = {
-    authenticated: true,
-    error: null
-}
-
-type FailAuthStatus = {
-    authenticated: false,
-    error: string
-}
-
-type UninitializedAuthStatus = {
-    authenticated: false,
-    error: null
-}
-
-type AuthStatus = SuccessAuthStatus | FailAuthStatus | UninitializedAuthStatus;
-
 export const useAuth = () => {
-    const token = useAppSelector(selectToken);
+    const {token} = useAppSelector(selectAuthState);
+    const [tempToken, setTempToken] = useState<string | null>(token);
     const dispatch = useAppDispatch();
-    const [signIn, {data: signInData, error: signInError, isLoading: isSignInProcessActive}] = useSignInMutation();
-    const [signUp, {data: signUpData, error: signUpError, isLoading: isSignUpProcessActive}] = useSignUpMutation();
+
     const [signInWithProvider, {
         data: signInWithProviderData,
         error: signInWithProviderError
     }] = useSignInWithProviderMutation();
-    const {data: me, refetch: refetchMeQuery, isUninitialized, error: meError} = useMeQuery();
-    const [status, setStatus] = useState<AuthStatus>({
-        authenticated: false,
-        error: null
-    });
+    const {
+        data: checkTokenResult,
+        refetch: checkToken,
+        isUninitialized,
+        error: checkTokenError
+    } = useCheckTokenQuery(tempToken);
 
-    const setToken = (token: string | null) => {
-        dispatch(updateToken(token));
+    const startSession = (sessionToken: string) => {
+        dispatch(establishSession(sessionToken))
+    }
+
+    const endSession = () => {
+        dispatch(clearSession())
     }
 
     useEffect(() => {
-        if (isUninitialized) return;
-
-        if (me) {
-            setStatus({
-                authenticated: true,
-                error: null
-            })
+        if (checkTokenResult && tempToken) {
+            startSession(tempToken)
         }
-    }, [me, isUninitialized])
+    }, [checkTokenResult])
 
     useEffect(() => {
-        if (!meError) return;
-
-        const status = get(meError, 'data.error.status');
-
-        switch (status) {
-            case 400: {
-                setStatus({
-                    authenticated: false,
-                    error: get(signInError, 'data.error.message', 'Authorization error')
-                })
-                setToken(null);
-                break;
-            }
-            case 401:
-            case 403:
-                break;
-            default: {
-                setStatus({
-                    authenticated: false,
-                    error: 'Unknown error me'
-                })
-            }
+        if (tempToken) {
+            checkToken()
         }
-    }, [meError])
+    }, [tempToken])
 
-    useEffect(() => {
-        if (token) refetchMeQuery()
-    }, [token])
 
-    useEffect(() => {
-        if (signInData && signInData.jwt) setToken(signInData.jwt)
-    }, [signInData])
-
-    useEffect(() => {
-        if (signUpData && signUpData.jwt) setToken(signUpData.jwt)
-    }, [signUpData])
-
-    useEffect(() => {
-        if (!signInError) return;
-        const status = get(signInError, 'data.error.status');
-
-        switch (status) {
-            case 400: {
-                setStatus({
-                    authenticated: false,
-                    error: get(signInError, 'data.error.message', 'Validation error')
-                })
-                break;
-            }
-            default: {
-                console.log(signInError);
-                setStatus({
-                    authenticated: false,
-                    error: 'Unknown error sign in'
-                })
-            }
+    useAuthError({
+        error: checkTokenError, onError: (message) => {
+            // silent fallback
+            console.log(message)
         }
-    }, [signInError])
-
-    useEffect(() => {
-        if (!signUpError) return;
-        const status = get(signUpError, 'data.error.status');
-
-        switch (status) {
-            case 400: {
-                setStatus({
-                    authenticated: false,
-                    error: get(signUpError, 'data.error.message', 'Validation error')
-                })
-                break;
-            }
-            default: {
-                setStatus({
-                    authenticated: false,
-                    error: 'Unknown error sign up'
-                })
-            }
-        }
-    }, [signUpError])
+    })
 
     useEffect(() => {
         if (!signInWithProviderError) return;
@@ -149,7 +66,7 @@ export const useAuth = () => {
 
     useEffect(() => {
         if (!signInWithProviderData) return;
-        setToken(signInWithProviderData.data.jwt)
+        setTempToken(signInWithProviderData.jwt)
     }, [signInWithProviderData])
 
     const applyGoogleAuth = async () => {
@@ -178,13 +95,10 @@ export const useAuth = () => {
 
     return {
         token,
-        setToken,
-        signIn,
-        signUp,
+        setTempToken,
         isUninitialized,
-        status,
-        isSignInProcessActive,
-        isSignUpProcessActive,
-        applyGoogleAuth
+        applyGoogleAuth,
+        startSession,
+        endSession
     }
 }

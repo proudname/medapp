@@ -14,6 +14,7 @@ declare global {
 
 export type RootStackParamList = {
     Auth: undefined;
+    RestorePassword: { step: number };
     Home: undefined;
     Modal: undefined;
     EditAppointmentModal: { editId: string | number } | undefined;

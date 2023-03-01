@@ -25,6 +25,16 @@ export type SignInWithProviderPayload = {
     "token": string
 }
 
+export type ForgotPasswordPayload = {
+    "email": string
+}
+
+export type ChangePasswordPayload = {
+    "code": string,
+    "password": string,
+    "passwordConfirmation": string,
+}
+
 export type SignUpPayload = {
     "username": string,
     "email": string,
@@ -35,6 +45,10 @@ export type SignUpPayload = {
     gender: Gender
 }
 
-export type SignInResult = ApiResponse<AuthResult>
+export type SignInResult = AuthResult
 
-export type SignUpResult = ApiResponse<AuthResult>
+export type SignUpResult = AuthResult
+
+export type ForgotPasswordResult = ApiResponse<{}>
+
+export type ChangePasswordResult = ApiResponse<{}>

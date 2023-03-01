@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     spacing: {
-        height: '5%'
+        height: 20
     },
     inputWrapper: {
         backgroundColor: Theme.bgWhite,

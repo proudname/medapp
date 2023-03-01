@@ -15,7 +15,7 @@ type Props = {
 
 export const CommonHeader = ({leftIconType, title}: Props) => {
 
-    const {setToken} = useAuth();
+    const {endSession} = useAuth();
     const navigation = useAppNavigation();
 
     const renderLeftIcon = () => {
@@ -37,9 +37,7 @@ export const CommonHeader = ({leftIconType, title}: Props) => {
     return <View style={styles.header}>
         {renderLeftIcon()}
         {renderTitle()}
-        <TouchableOpacity onPress={() => {
-            setToken(null)
-        }} style={styles.settingsContainer}>
+        <TouchableOpacity onPress={endSession} style={styles.settingsContainer}>
             <AntDesign name='logout' size={25} color={'white'}/>
         </TouchableOpacity>
     </View>

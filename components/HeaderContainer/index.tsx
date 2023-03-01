@@ -1,11 +1,9 @@
 import {useAuth} from "../../hooks/useAuth";
 import {useEffect} from "react";
-import {useAppNavigation} from "../../hooks/useAppNavigation";
+import {NativeStackHeaderProps} from "@react-navigation/native-stack";
 
-
-export const AuthContainer = () => {
+export const HeaderContainer = ({navigation}: NativeStackHeaderProps) => {
     const {token} = useAuth();
-    const navigation = useAppNavigation();
 
     useEffect(() => {
         if (!token) {

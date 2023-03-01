@@ -1,5 +1,15 @@
 import {createApi} from '@reduxjs/toolkit/query/react'
-import {SignInPayload, SignInResult, SignInWithProviderPayload, SignUpPayload, SignUpResult} from "../types";
+import {
+    ChangePasswordPayload,
+    ChangePasswordResult,
+    ForgotPasswordPayload,
+    ForgotPasswordResult,
+    SignInPayload,
+    SignInResult,
+    SignInWithProviderPayload,
+    SignUpPayload,
+    SignUpResult
+} from "../types";
 import {apiBaseQuery} from "../utils/apiBaseQuery";
 
 // Define a service using a base URL and expected endpoints
@@ -23,6 +33,22 @@ export const authApi = createApi({
                 headers: {}
             }),
         }),
+        forgotPassword: builder.mutation<ForgotPasswordResult, ForgotPasswordPayload>({
+            query: (payload) => ({
+                url: `/api/auth/forgot-password`,
+                method: 'POST',
+                body: payload,
+                headers: {}
+            }),
+        }),
+        changePassword: builder.mutation<ChangePasswordResult, ChangePasswordPayload>({
+            query: (payload) => ({
+                url: `/api/auth/reset-password`,
+                method: 'POST',
+                body: payload,
+                headers: {}
+            }),
+        }),
         signInWithProvider: builder.mutation<SignInResult, SignInWithProviderPayload>({
             query: ({provider, token}) => ({
                 url: `/api/auth/${provider}/callback?access_token=${token}`,
@@ -30,10 +56,13 @@ export const authApi = createApi({
                 headers: {}
             }),
         }),
-        me: builder.query<SignInResult, void>({
-            query: () => ({
+        checkToken: builder.query<SignInResult, string | null>({
+            query: (token) => ({
                 url: `/api/users/me`,
                 method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             }),
         }),
     }),
@@ -42,4 +71,11 @@ export const authApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {useSignUpMutation, useSignInMutation, useMeQuery, useSignInWithProviderMutation} = authApi
+export const {
+    useSignUpMutation,
+    useSignInMutation,
+    useCheckTokenQuery,
+    useSignInWithProviderMutation,
+    useForgotPasswordMutation,
+    useChangePasswordMutation
+} = authApi

@@ -4,23 +4,14 @@ import Theme from "../../theme";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        height: '100%',
     },
     spacing: {
-        height: 20
+        height: '5%'
     },
     inputWrapper: {
         backgroundColor: Theme.bgWhite,
         borderWidth: 1,
         borderColor: '#E6E8EC',
-        paddingHorizontal: 20,
-        alignItems: 'center',
-        flexDirection: 'row',
-        paddingVertical: 18,
-        borderRadius: 10,
-    },
-    birthdayInputWrapper: {
         paddingHorizontal: 20,
         alignItems: 'center',
         flexDirection: 'row',
@@ -49,7 +40,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 20,
         borderRadius: 10,
-        marginVertical: 25,
+        marginTop: 25,
         justifyContent: 'center'
     },
     gplus: {
@@ -62,10 +53,6 @@ const styles = StyleSheet.create({
         width: 20,
         height: 20,
         right: 25
-    },
-    datepicker: {
-        textAlign: 'left',
-        justifyContent: 'flex-end'
     }
 });
 

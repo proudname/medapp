@@ -18,6 +18,8 @@ import AffiliateScreen from "../screens/AffiliateScreen";
 import BalanceScreen from "../screens/BalanceScreen";
 import ScheduleListScreen from "../screens/SheduleList";
 import EditAppointmentModalScreen from '../screens/EditAppointmentModalScreen';
+import RestorePasswordScreen from "../screens/RestorePasswordScreen";
+import {HeaderContainer} from "../components/HeaderContainer";
 
 export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName }) {
     return (
@@ -37,8 +39,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     return (
-        <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName={'Home'}>
-            <Stack.Screen name="Auth" component={AuthenticationScreen}/>
+        <Stack.Navigator screenOptions={{header: (props) => <HeaderContainer {...props} />}}
+                         initialRouteName={'Home'}>
+            <Stack.Group screenOptions={{headerShown: false}}>
+                <Stack.Screen name="Auth" component={AuthenticationScreen}/>
+                <Stack.Screen name="RestorePassword" component={RestorePasswordScreen}/>
+            </Stack.Group>
             <Stack.Screen name="Home" component={HomeScreen}/>
             <Stack.Screen name="ScheduleList" component={ScheduleListScreen}/>
             <Stack.Screen name="PlanList" component={PlanListScreen}/>

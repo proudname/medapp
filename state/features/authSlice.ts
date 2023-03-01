@@ -13,8 +13,11 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        updateToken: (state, action: PayloadAction<string | null>) => {
+        establishSession: (state, action: PayloadAction<string>) => {
             state.token = action.payload
+        },
+        clearSession: (state) => {
+            state.token = null;
         }
     },
 })
@@ -22,7 +25,7 @@ export const authSlice = createSlice({
 // Action creators are generated for each case reducer function
 // export const {increment} = counterSlice.actions
 
-export const selectToken = (state: RootState) => state.auth.token;
-export const {updateToken} = authSlice.actions;
+export const selectAuthState = (state: RootState): AuthState => state.auth;
+export const {establishSession, clearSession} = authSlice.actions;
 
 export default authSlice.reducer

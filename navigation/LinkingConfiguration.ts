@@ -14,6 +14,7 @@ const linking: LinkingOptions<RootStackParamList> = {
     config: {
         screens: {
             Auth: 'authentication',
+            RestorePassword: 'restore-password',
             Home: 'home',
             PlanList: 'plans-list',
             ScheduleList: 'schedule-list',
