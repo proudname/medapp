@@ -45,6 +45,7 @@ export default function MyAppointmentsScreen() {
             <Text style={styles.bigLabel}>Previous Appointment</Text>
             {
                 pastAppointments.map((appointment) => <InfoCard
+                    key={appointment.id}
                     buttonEnabled={false}
                     bigText={appointment.attributes.medicalCenter.data!.attributes.name}
                     date={appointment.attributes.date}
@@ -56,6 +57,7 @@ export default function MyAppointmentsScreen() {
     }
 
     const renderComingAppointments = () => comingAppointments.map((appointment) => <InfoCard
+        key={appointment.id}
         buttonEnabled={true}
         onButtonClick={() => navigation.navigate('EditAppointmentModal', {editId: appointment.id})}
         bigText={appointment.attributes.medicalCenter.data!.attributes.name}

@@ -10,14 +10,14 @@ export const plansApi = createApi({
     endpoints: (builder) => ({
         getPlans: builder.query<GetPlansResponse, void>({
             query: () => ({
-                url: `/api/plans?populate=image&sort=week`,
+                url: `/api/plans/my?populate=image&sort=week`,
                 method: 'GET'
             }),
             providesTags: [{type: 'Plan', id: 'LIST'}]
         }),
         updatePlan: builder.mutation<UpdatePlanResponse, { id: string | number, payload: UpdatePlanPayload }>({
             query: ({id, payload}) => ({
-                url: `/api/plans/${id}`,
+                url: `/api/plans/my/${id}`,
                 method: 'PUT',
                 body: payload,
             }),

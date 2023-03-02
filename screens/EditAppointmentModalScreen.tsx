@@ -64,7 +64,7 @@ export default function EditAppointmentModalScreen({route}: RootStackScreenProps
                 medicalCenter: values.centerId || undefined
             }
         }).unwrap();
-        toast('Appointment created', 'success')
+        toast('Appointment updated', 'success')
     }
 
     const handleCreateAppointment = async () => {
@@ -72,7 +72,7 @@ export default function EditAppointmentModalScreen({route}: RootStackScreenProps
             date: values.date!,
             medicalCenter: values.centerId!
         }).unwrap();
-        toast('Appointment updated', 'success')
+        toast('Appointment created', 'success')
     }
 
     const getMarkedDates = () => {

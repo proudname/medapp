@@ -17,21 +17,21 @@ export const appointmentsApi = createApi({
     endpoints: (builder) => ({
         getAppointments: builder.query<GetAppointmentsResponse, void>({
             query: () => ({
-                url: `/api/appointments?populate=medicalCenter&sort=date`,
+                url: `/api/appointments/my?populate=medicalCenter&sort=date`,
                 method: 'GET'
             }),
             providesTags: ['Appointments']
         }),
         getAppointment: builder.query<GetAppointmentResponse, string | number>({
             query: (id) => ({
-                url: `/api/appointments/${id}?populate=medicalCenter`,
+                url: `/api/appointments/my/${id}?populate=medicalCenter`,
                 method: 'GET'
             }),
             providesTags: ['Appointments']
         }),
         createAppointment: builder.mutation<CreateAppointmentResponse, CreateAppointmentPayload>({
             query: (payload) => ({
-                url: `/api/appointments`,
+                url: `/api/appointments/my`,
                 method: 'POST',
                 body: {
                     data: payload
@@ -41,7 +41,7 @@ export const appointmentsApi = createApi({
         }),
         updateAppointment: builder.mutation<UpdateAppointmentResponse, UpdateAppointmentPayload>({
             query: ({id, payload}) => ({
-                url: `/api/appointments/${id}`,
+                url: `/api/appointments/my/${id}`,
                 method: 'PUT',
                 body: {
                     data: payload
