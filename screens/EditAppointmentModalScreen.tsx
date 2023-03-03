@@ -43,6 +43,7 @@ export default function EditAppointmentModalScreen({route}: RootStackScreenProps
     }>({
         validationSchema: editAppointmentSchema,
         onSubmit: async (values) => {
+            console.log(values)
             if (editId) {
                 await handleUpdateAppointment()
             } else {
@@ -68,6 +69,7 @@ export default function EditAppointmentModalScreen({route}: RootStackScreenProps
     }
 
     const handleCreateAppointment = async () => {
+        console.log(values.date, values.centerId, 'value')
         await createAppointment({
             date: values.date!,
             medicalCenter: values.centerId!
@@ -211,6 +213,7 @@ export default function EditAppointmentModalScreen({route}: RootStackScreenProps
                     }} title={
                         'Save'
                     }/>
+                    <Button type={'clear'} onPress={() => navigation.goBack()}>Cancel</Button>
                 </View>
 
                 {/* Use a light status bar on iOS to account for the black space above the modal */}

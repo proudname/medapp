@@ -6,10 +6,11 @@ import Theme from "../../theme";
 import {Gender} from "../../enums";
 import {InputError} from "../InputError";
 import {signUpSchema} from "../../validation/sign-up.schema";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
 import SelectDropdown from 'react-native-select-dropdown'
 import {extractEnumValues} from "../../utils/extractEnumValues";
 import {useSignUp} from "../../hooks/useSignUp";
+import {CrossPlatformDatePicker} from "../CrossPlatformDatePicker";
+import moment from "moment";
 
 const SignUpTab = () => {
 
@@ -23,13 +24,14 @@ const SignUpTab = () => {
             username: '',
             name: '',
             surname: '',
-            birthday: '2000-10-10',
+            birthday: moment('2000-10-10').toDate(),
             gender: Gender.MALE
         },
         onSubmit: (values) => {
             signUp({
                 email: values.username,
-                ...values
+                ...values,
+                birthday: moment(values.birthday).format('YYYY-MM-DD'),
             })
         }
     })
@@ -102,7 +104,7 @@ const SignUpTab = () => {
                 <Image source={Theme.lock} style={styles.icon}/>
                 <TextInput placeholderTextColor={'#7c7c7c'} placeholder="Password" style={styles.input}
                            onChangeText={(text) => setFieldValue('password', text)}
-                           autoCapitalize={'none'}
+                           autoCapitalize={'none'} secureTextEntry
                 />
             </View>
             <InputError touched={touched.password} error={errors.password?.toString()}/>
@@ -112,7 +114,7 @@ const SignUpTab = () => {
 
                 <TextInput placeholderTextColor={'#7c7c7c'} placeholder="Repeat password" style={styles.input}
                            onChangeText={(text) => setFieldValue('repeatPassword', text)}
-                           autoCapitalize={'none'}
+                           autoCapitalize={'none'} secureTextEntry
                 />
             </View>
             <InputError touched={touched.repeatPassword} error={errors.repeatPassword?.toString()}/>
@@ -120,12 +122,13 @@ const SignUpTab = () => {
             <View style={styles.birthdayInputWrapper}>
                 <Image source={Theme.cake} style={styles.icon}/>
                 <View style={styles.datepicker}>
-                    <RNDateTimePicker
-                        placeholderText="select date"
-                        value={new Date(formikValues.birthday)}
-                        onChange={(_, date) => setFieldValue('birthday', date?.toISOString())}/>
+                    <CrossPlatformDatePicker
+                        value={formikValues.birthday}
+                        setValue={(value) => setFieldValue('birthday', value)}
+                    />
                 </View>
             </View>
+            {/** @ts-ignore **/}
             <InputError touched={!!touched.birthday} error={errors.birthday?.toString()}/>
 
             <TouchableOpacity disabled={isSignUpProcessActive} style={styles.mainBtn} onPress={() => handleSubmit()}>

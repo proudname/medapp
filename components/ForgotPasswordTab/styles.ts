@@ -4,9 +4,10 @@ import Theme from "../../theme";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        height: '100%'
     },
     spacing: {
-        height: '5%'
+        height: 20
     },
     inputWrapper: {
         backgroundColor: Theme.bgWhite,

@@ -8,7 +8,7 @@ export const signUpSchema = yup.object().shape({
         .required('Email is a required field'),
     name: yup.string().required('Name is a required field'),
     surname: yup.string().required('Surname is a required field'),
-    birthday: yup.string().required('Birthday is a required field'),
+    birthday: yup.date().required('Birthday is a required field'),
     gender: yup.string()
         .test((value) => extractEnumValues(Gender).includes(value as any))
         .required('Gender is a required field'),
