@@ -23,6 +23,7 @@ export const useAuthError = ({error, onError}: Props) => {
             case 402:
                 break;
             default: {
+                alert(JSON.stringify(error))
                 onError(`Unknown error. Code ${status}`)
             }
         }

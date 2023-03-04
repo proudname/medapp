@@ -7,7 +7,7 @@ import {toast} from "../utils/toast";
 
 export const useSignIn = () => {
 
-    const {setTempToken} = useAuth();
+    const {setTempToken, signInWithProvider} = useAuth();
     const [signIn, {data: signInData, error: signInError, isLoading: isSignInProcessActive}] = useSignInMutation();
 
 
@@ -24,5 +24,6 @@ export const useSignIn = () => {
     return {
         signIn,
         isSignInProcessActive,
+        signInWithProvider
     }
 }

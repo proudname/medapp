@@ -1,10 +1,8 @@
 import React, {useState} from "react";
 import {FlatList, Share, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-
 import {AntDesign, Feather} from '@expo/vector-icons';
 import MaskedView from '@react-native-masked-view/masked-view';
 import {LinearGradient} from 'expo-linear-gradient';
-
 import InfoCard from '../../components/InfoCard'
 import Theme from "../../theme";
 import {useAppNavigation} from "../../hooks/useAppNavigation";
@@ -14,39 +12,13 @@ import {CommonHeader} from "../../components/CommonHeader";
 import Screen from "../../components/Screen";
 
 //sample data for the card week
-const data = [
-    {
-        id: '1',
-        amount: '$55.00',
-        description: 'DeCare Bagdat Appointment Fee',
-        date: '02/03/2023',
-        active: false,
-
-    },
-    {
-        id: '2',
-        amount: '$21.00',
-        description: 'DeCare Bagdat Appointment Fee',
-        date: '02/17/2023',
-        active: true,
-    },
-    {
-        id: '3',
-        amount: '$21.00',
-        description: 'DeCare Bagdat Appointment Fee',
-        date: '02/17/2023',
-        active: true,
-    },
-    {
-        id: '4',
-        amount: '$21.00',
-        description: 'DeCare Bagdat Appointment Fee',
-        date: '02/17/2023',
-        active: true,
-    },
-
-];
-
+const data = [{
+    id: '1',
+    amount: '$55.00',
+    description: 'DeCare Bagdat Appointment Fee',
+    date: '02/03/2023',
+    active: false,
+}];
 
 export default function AffiliateScreen() {
 
@@ -128,7 +100,7 @@ export default function AffiliateScreen() {
                             </View>
                         </View>
 
-                        <Text style={styles.bigLabel}>Bonuses History</Text>
+                        {data.length && <Text style={styles.bigLabel}>Bonuses History</Text>}
                     </View>}
                     data={data}
                     renderItem={({item}) => <InfoCard bigText={item.amount} date={item.date}

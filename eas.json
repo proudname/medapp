@@ -1,0 +1,37 @@
+{
+  "cli": {
+    "version": ">= 3.7.2"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m1-medium"
+      },
+      "env": {
+        "ANDROID_SDK_ROOT": "/Users/aleksejgriskovec/Library/Android/sdk"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m1-medium"
+      },
+      "env": {
+        "ANDROID_SDK_ROOT": "/Users/aleksejgriskovec/Library/Android/sdk"
+      }
+    },
+    "production": {
+      "ios": {
+        "resourceClass": "m1-medium"
+      },
+      "env": {
+        "ANDROID_SDK_ROOT": "/Users/aleksejgriskovec/Library/Android/sdk"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

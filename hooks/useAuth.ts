@@ -4,11 +4,8 @@ import {useAppDispatch} from "./useAppDispatch";
 import {useEffect, useState} from "react";
 import {useCheckTokenQuery, useSignInWithProviderMutation} from "../api";
 import {get} from "lodash";
-// import {GoogleSignin, statusCodes,} from '@react-native-google-signin/google-signin';
 import {toast} from "../utils/toast";
 import {useAuthError} from "./useAuthError";
-
-// GoogleSignin.configure();
 
 export const useAuth = () => {
     const {token} = useAppSelector(selectAuthState);
@@ -69,36 +66,13 @@ export const useAuth = () => {
         setTempToken(signInWithProviderData.jwt)
     }, [signInWithProviderData])
 
-    const applyGoogleAuth = async () => {
-        // try {
-        //     await GoogleSignin.hasPlayServices();
-        //     const userInfo = await GoogleSignin.signIn();
-        //     const token = userInfo.idToken;
-        //     if (!token) {
-        //         toast('Token not found', 'error');
-        //         return;
-        //     }
-        //     signInWithProvider({provider: 'google', token})
-        // } catch (error: any) {
-        //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        //         // user cancelled the login flow
-        //     } else if (error.code === statusCodes.IN_PROGRESS) {
-        //         toast('Another instance of Google Auth already running', 'warn');
-        //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        //         toast('Play services not available', 'error');
-        //     } else {
-        //         toast('Google auth error', 'error');
-        //     }
-        //     console.log(error);
-        // }
-    };
 
     return {
         token,
         setTempToken,
         isUninitialized,
-        applyGoogleAuth,
         startSession,
-        endSession
+        endSession,
+        signInWithProvider
     }
 }

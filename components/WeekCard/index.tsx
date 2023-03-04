@@ -7,6 +7,7 @@ import {useUpdatePlanMutation} from "../../api";
 import {ApiPlan} from "../../types";
 import {useError} from "../../hooks/useError";
 import {toast} from "../../utils/toast";
+import Constants from "expo-constants";
 
 type Props = {
     item: ApiPlan
@@ -18,7 +19,7 @@ export default function WeekCard({item: {attributes: {completed, week, date, ima
 
     useError(error)
 
-    const imageUri = process.env.ADMIN_URL + image.data.attributes.url;
+    const imageUri = Constants!.expoConfig!.extra!.adminUrl + image.data.attributes.url;
     const [dialog, setDialog] = useState(false);
 
     return (

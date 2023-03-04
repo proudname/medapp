@@ -20,14 +20,11 @@ const ForgotPasswordTab = () => {
             email: '',
         },
         onSubmit: async (values) => {
-            try {
-                await restorePassword({
-                    email: values.email,
-                }).unwrap()
-                toast('If that email exist a code will be sent', 'success');
-                changeStep(1)
-            } catch (e) {
-            }
+            restorePassword({
+                email: values.email,
+            }).unwrap()
+            toast('If that email exist a code will be sent', 'success');
+            changeStep(1)
         }
     })
 
@@ -48,7 +45,7 @@ const ForgotPasswordTab = () => {
 
             <TouchableOpacity disabled={isRestorePasswordLoading} onPress={() => handleSubmit()} style={styles.mainBtn}>
                 <Text style={{color: Theme.bgWhite, fontWeight: 'bold'}}>
-                    {isRestorePasswordLoading ? 'Sending...' : 'Send code'}
+                    Send code
                 </Text>
             </TouchableOpacity>
 

@@ -8,24 +8,14 @@ import {styles} from "./styles";
 import {CommonHeader} from "../../components/CommonHeader";
 
 //sample data for the card week
-const data = [
-    {
-        id: '1',
-        amount: '$12,000.00',
-        description: 'DeCare Bagdat Appointment Fee',
-        date: '02/03/2023',
-        active: false,
+const data = [{
+    id: '1',
+    amount: '$12,000.00',
+    description: 'DeCare Bagdat Appointment Fee',
+    date: '02/03/2023',
+    active: false,
 
-    },
-    {
-        id: '3',
-        amount: '$35,000.00',
-        description: 'DeCare Bagdat Appointment Fee',
-        date: '02/17/2023',
-        active: true,
-    },
-
-];
+}];
 
 export default function BalanceScreen() {
 
@@ -47,7 +37,7 @@ export default function BalanceScreen() {
                                 <View style={[styles.whiteWrapper, styles.shadowProp]}>
                                     <MaskedView
                                         style={{height: 40, marginLeft: 10}}
-                                        maskElement={<Text style={styles.number}>10,000</Text>}
+                                        maskElement={<Text style={styles.number}>0</Text>}
                                     >
                                         <LinearGradient
                                             colors={['#EA717E', '#CF3642']}
@@ -57,11 +47,10 @@ export default function BalanceScreen() {
                                     </MaskedView>
                                     <Text style={styles.label}>My Balance</Text>
                                 </View>
-
                                 <View style={[styles.whiteWrapper, styles.shadowProp]}>
                                     <MaskedView
                                         style={{height: 40, marginLeft: 10}}
-                                        maskElement={<Text style={styles.number}>18000</Text>}
+                                        maskElement={<Text style={styles.number}>0</Text>}
                                     >
                                         <LinearGradient
                                             colors={['#ADA4DF', '#9F4EF5']}
@@ -74,7 +63,7 @@ export default function BalanceScreen() {
                                 <View style={[styles.whiteWrapper, styles.shadowProp]}>
                                     <MaskedView
                                         style={{height: 40, marginLeft: 10}}
-                                        maskElement={<Text style={styles.number}>18000</Text>}
+                                        maskElement={<Text style={styles.number}>0</Text>}
                                     >
                                         <LinearGradient
                                             colors={['#A86AF6', '#1A2A99']}
@@ -87,7 +76,7 @@ export default function BalanceScreen() {
                                 <View style={[styles.whiteWrapper, styles.shadowProp]}>
                                     <MaskedView
                                         style={{height: 40, marginLeft: 10}}
-                                        maskElement={<Text style={styles.number}>1000</Text>}
+                                        maskElement={<Text style={styles.number}>0</Text>}
                                     >
                                         <LinearGradient
                                             colors={['#E79035', '#FDBE00']}
@@ -100,11 +89,11 @@ export default function BalanceScreen() {
                             </View>
 
 
-                            <TouchableOpacity style={styles.mainBtn}>
+                            <TouchableOpacity style={styles.mainBtn} onPress={() => alert('Not implemented')}>
                                 <Text style={styles.payText}>Pay</Text>
                             </TouchableOpacity>
 
-                            <Text style={styles.bigLabel}>Next Payment</Text>
+                            {data.length && <Text style={styles.bigLabel}>Next Payment</Text>}
                         </View>
                     }
                     data={data}

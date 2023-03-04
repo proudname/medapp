@@ -42,8 +42,7 @@ export default function EditAppointmentModalScreen({route}: RootStackScreenProps
         centerId?: null | string | number
     }>({
         validationSchema: editAppointmentSchema,
-        onSubmit: async (values) => {
-            console.log(values)
+        onSubmit: async () => {
             if (editId) {
                 await handleUpdateAppointment()
             } else {
@@ -58,22 +57,21 @@ export default function EditAppointmentModalScreen({route}: RootStackScreenProps
     })
 
     const handleUpdateAppointment = async () => {
-        await updateAppointment({
+        updateAppointment({
             id: editId!,
             payload: {
                 date: values.date || undefined,
                 medicalCenter: values.centerId || undefined
             }
-        }).unwrap();
+        })
         toast('Appointment updated', 'success')
     }
 
     const handleCreateAppointment = async () => {
-        console.log(values.date, values.centerId, 'value')
-        await createAppointment({
+        createAppointment({
             date: values.date!,
             medicalCenter: values.centerId!
-        }).unwrap();
+        })
         toast('Appointment created', 'success')
     }
 
