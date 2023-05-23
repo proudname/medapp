@@ -16,7 +16,11 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 5,
-        padding: 25
+        padding: 25,
+    },
+    video: {
+        maxHeight: 250,
+        flex: 1
     },
     heading: {
         marginTop: 35,

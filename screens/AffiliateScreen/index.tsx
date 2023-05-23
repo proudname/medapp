@@ -1,15 +1,20 @@
-import React, {useState} from "react";
-import {FlatList, Share, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import React, {useEffect} from "react";
+import {FlatList, RefreshControl, Share, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {AntDesign, Feather} from '@expo/vector-icons';
 import MaskedView from '@react-native-masked-view/masked-view';
 import {LinearGradient} from 'expo-linear-gradient';
 import InfoCard from '../../components/InfoCard'
 import Theme from "../../theme";
-import {useAppNavigation} from "../../hooks/useAppNavigation";
 import {toast} from "../../utils/toast";
 import * as Clipboard from 'expo-clipboard';
 import {CommonHeader} from "../../components/CommonHeader";
 import Screen from "../../components/Screen";
+import {
+    useGeneratePromoMutation,
+    useGetMyBonusTransactionsQuery,
+    useGetMyBonusWalletQuery
+} from "../../api/billing.api";
+import moment from "moment";
 
 //sample data for the card week
 const data = [{
@@ -22,39 +27,53 @@ const data = [{
 
 export default function AffiliateScreen() {
 
-    const navigation = useAppNavigation();
+    const [generatePromo, {data: promo}] = useGeneratePromoMutation();
+    const {data: bonusTransactions, refetch: refetchTransactions} = useGetMyBonusTransactionsQuery();
+    const {data: bonusWallet, refetch: refetchBonusWallet} = useGetMyBonusWalletQuery();
+    const [refreshing, setRefreshing] = React.useState(false);
 
-    const [referralLink] = useState('bhy7d89f3o2jf9o87u3j4ikid43t');
-    const [promoLink] = useState('3o2jf9o87');
+    useEffect(() => {
+        generatePromo();
+    }, [])
 
-    const handleRefCopy = async () => {
-        await Clipboard.setStringAsync(referralLink);
-        toast('Link copied', 'success');
-    }
+    console.log(bonusTransactions)
 
     const handlePromoCopy = async () => {
-        await Clipboard.setStringAsync(promoLink);
+        if (!promo) return;
+        await Clipboard.setStringAsync(promo.result);
         toast('Promo code copied', 'success');
     }
 
     const handlePromoShare = async () => {
+        if (!promo) return;
         Share.share({
-            message: promoLink
+            message: promo.result
         })
     }
+
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true)
+        await generatePromo()
+        await refetchBonusWallet()
+        await refetchTransactions()
+        setRefreshing(false)
+    }, []);
 
     return (
         <Screen>
             <CommonHeader title={'My Bonuses'} leftIconType={'back'}/>
             <View style={styles.content}>
                 <FlatList
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+                    }
                     contentContainerStyle={{padding: 25}}
                     ListHeaderComponent={<View>
                         <View style={[styles.whiteWrapper, styles.shadowProp]}>
                             <Text style={styles.label}>Total</Text>
                             <MaskedView
                                 style={{height: 40, marginLeft: 10}}
-                                maskElement={<Text style={styles.number}>0</Text>}
+                                maskElement={<Text style={styles.number}>{bonusWallet?.result.balance || 0}</Text>}
                             >
                                 <LinearGradient
                                     colors={['#EA717E', '#CF3642']}
@@ -62,28 +81,17 @@ export default function AffiliateScreen() {
                                     style={{flex: 1}}
                                 />
                             </MaskedView>
-
                         </View>
-
                         <View style={{
                             height: 170,
                             justifyContent: 'space-between',
                             flexDirection: 'column'
                         }}>
-                            <View>
-                                <Text style={{opacity: 0.6, marginBottom: 5}}>My Code / Link</Text>
-                                <View style={styles.codelinkWrapper}>
-                                    <Text style={styles.linkText}>bhy7d89f3o2jf9o87u3j4ikid43t</Text>
-                                    <TouchableOpacity style={styles.copyBtn} onPress={handleRefCopy}>
-                                        <Feather name="copy" size={18} color="white"/>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
 
                             <View>
                                 <Text style={{opacity: 0.6, marginBottom: 5}}>My Promo</Text>
                                 <View style={styles.codelinkWrapper}>
-                                    <Text style={styles.linkText}>3o2jf9o87</Text>
+                                    <Text style={styles.linkText}>{promo?.result}</Text>
                                     <View style={{
                                         flexDirection: 'row',
                                         width: 80,
@@ -99,12 +107,13 @@ export default function AffiliateScreen() {
                                 </View>
                             </View>
                         </View>
-
                         {data.length && <Text style={styles.bigLabel}>Bonuses History</Text>}
                     </View>}
-                    data={data}
-                    renderItem={({item}) => <InfoCard bigText={item.amount} date={item.date}
-                                                      description={item.description} active={item.active}/>}
+                    data={bonusTransactions?.result || []}
+                    renderItem={({item}) => <InfoCard
+                        bigText={item.amount.toString()}
+                        date={moment(item.createdAt).format('DD/MM/YYYY HH:mm')}
+                        description={item.userId} active={item.type === 'topup'}/>}
                     keyExtractor={item => item.id}
                 />
             </View>

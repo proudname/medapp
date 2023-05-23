@@ -50,7 +50,7 @@ function AppDialog(props: Props) {
         }}>
             <View style={{
                 justifyContent: 'center',
-                height: 200
+                height: 400
             }}>
                 <View style={{
                     justifyContent: 'center',
@@ -63,7 +63,7 @@ function AppDialog(props: Props) {
                         {title}
                     </Text>
                 </View>
-                <View>
+                <View style={{flex: 1}}>
                     {content}
                 </View>
 

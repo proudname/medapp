@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useFormik} from "formik";
 import {signInSchema} from "../../validation/sign-in.schema";
 import {Image, ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
@@ -7,27 +7,11 @@ import Theme from "../../theme";
 import {InputError} from "../InputError";
 import {useNavigation} from "@react-navigation/native";
 import {useSignIn} from "../../hooks/useSignIn";
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
-
-WebBrowser.maybeCompleteAuthSession();
 
 const SignInTab = () => {
 
     const navigation = useNavigation();
     const {signIn, isSignInProcessActive, signInWithProvider} = useSignIn();
-
-    const [request, response, promptAsync] = Google.useAuthRequest({
-        expoClientId: '834493979164-csf44madiol53vnmecac5c6qhnv7hm3q.apps.googleusercontent.com',
-        androidClientId: '391828306562-nrjtgt2o8qrbmth4c2po9ja384nas2vb.apps.googleusercontent.com',
-    });
-
-    useEffect(() => {
-        if (response?.type === "success") {
-            signInWithProvider({provider: 'google', token: response.authentication?.accessToken!})
-        }
-    }, [response]);
-
 
     const [off, setOff] = useState(true)
 
@@ -84,17 +68,6 @@ const SignInTab = () => {
             <TouchableOpacity disabled={isSignInProcessActive} onPress={() => handleSubmit()} style={styles.mainBtn}>
                 <Text style={{color: Theme.bgWhite, fontWeight: 'bold'}}>Login</Text>
             </TouchableOpacity>
-
-            <View style={styles.gplus}>
-                <Text>Or Create Account Using</Text>
-                <TouchableOpacity style={{marginTop: 15}} disabled={!request} onPress={() => promptAsync()}>
-                    <Image source={Theme.gplus} style={{
-                        height: 50,
-                        width: 50
-                    }}/>
-                </TouchableOpacity>
-
-            </View>
 
         </ScrollView>
     );

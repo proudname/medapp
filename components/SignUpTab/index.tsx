@@ -24,6 +24,7 @@ const SignUpTab = () => {
             username: '',
             name: '',
             surname: '',
+            phoneNumber: '',
             birthday: moment('2000-10-10').toDate(),
             gender: Gender.MALE
         },
@@ -50,6 +51,18 @@ const SignUpTab = () => {
                 />
             </View>
             <InputError touched={touched.username} error={errors.username?.toString()}/>
+
+            <View style={styles.inputWrapper}>
+                <Image source={Theme.email} style={styles.icon}/>
+                <TextInput
+                    autoCapitalize={'none'}
+                    placeholderTextColor={'#7c7c7c'}
+                    placeholder="Phone number"
+                    style={styles.input}
+                    onChangeText={(text) => setFieldValue('phoneNumber', text)}
+                />
+            </View>
+            <InputError touched={touched.phoneNumber} error={errors.phoneNumber?.toString()}/>
 
             <View style={styles.inputWrapper}>
                 <Image source={Theme.user} style={styles.icon}/>

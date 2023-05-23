@@ -1,16 +1,19 @@
-import {FlatList, RefreshControl, View} from "react-native";
+import {View} from "react-native";
 import styles from "./styles";
-import WeekCard from "../../components/WeekCard";
 import {useGetPlansQuery} from "../../api";
 import {useError} from "../../hooks/useError";
 import Screen from "../../components/Screen";
 import {CommonHeader} from "../../components/CommonHeader";
 import React from "react";
+import {useGetMediaQuery} from "../../api/treatmentMedia.api";
+import {VideoPlayer} from "../../components/VideoPlayer";
+import Constants from "expo-constants";
 
 export const PlanListScreen = () => {
 
     const {data, error, refetch} = useGetPlansQuery();
     const [refreshing, setRefreshing] = React.useState(false);
+    const {data: treatmentMedia} = useGetMediaQuery();
 
     useError(error);
 
@@ -24,14 +27,11 @@ export const PlanListScreen = () => {
         <Screen>
             <CommonHeader title={'My Treatment'} leftIconType={'back'}/>
             <View style={styles.content}>
-                <FlatList
-                    data={data?.data}
-                    renderItem={({item}) => <WeekCard item={item}/>}
-                    keyExtractor={item => item.id.toString()}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
-                    }
-                />
+                <View style={styles.video}>
+                    <VideoPlayer source={
+                        `${Constants!.expoConfig!.extra!.adminUrl}${treatmentMedia?.data.attributes.video.data.attributes.url}`
+                    }/>
+                </View>
             </View>
         </Screen>
     );

@@ -24,3 +24,6 @@ export type ApiResponse<D = unknown, M = unknown> = ApiSuccessResponse<D, M>;
 export type ApiMedia = {
     data: ApiDoc<{ url: string }>
 }
+export type ApiMediaList = {
+    data: ApiDoc<{ url: string }>[]
+}

@@ -9,6 +9,15 @@ export const signUpSchema = yup.object().shape({
     name: yup.string().required('Name is a required field'),
     surname: yup.string().required('Surname is a required field'),
     birthday: yup.date().required('Birthday is a required field'),
+    phoneNumber: yup.string()
+        .test('phone', 'Phone number is not valid', (value) => {
+            if (!value) {
+                return true;
+            }
+
+            return /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(value);
+        })
+        .required('Birthday is a required field'),
     gender: yup.string()
         .test((value) => extractEnumValues(Gender).includes(value as any))
         .required('Gender is a required field'),

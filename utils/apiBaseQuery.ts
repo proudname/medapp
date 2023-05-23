@@ -9,6 +9,5 @@ export const apiBaseQuery = fetchBaseQuery(
             const state: RootState = api.getState();
             const {token} = state.auth;
             if (token) headers.set('Authorization', `Bearer ${state.auth.token}`)
-            headers.set("ngrok-skip-browser-warning", "69420")
         }
     })

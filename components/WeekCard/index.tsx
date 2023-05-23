@@ -8,18 +8,19 @@ import {ApiPlan} from "../../types";
 import {useError} from "../../hooks/useError";
 import {toast} from "../../utils/toast";
 import Constants from "expo-constants";
+import {VideoPlayer} from "../VideoPlayer";
 
 type Props = {
     item: ApiPlan
 }
 
-export default function WeekCard({item: {attributes: {completed, week, date, image}, id}}: Props) {
+export default function WeekCard({item: {attributes: {completed, week, date, images}, id}}: Props) {
 
     const [updatePlan, {error}] = useUpdatePlanMutation();
 
     useError(error)
 
-    const imageUri = Constants!.expoConfig!.extra!.adminUrl + image.data.attributes.url;
+    const firstImageUri = Constants!.expoConfig!.extra!.adminUrl + images?.data[0].attributes?.url;
     const [dialog, setDialog] = useState(false);
 
     return (
@@ -34,7 +35,7 @@ export default function WeekCard({item: {attributes: {completed, week, date, ima
                 <Text style={styles.date}>{date}</Text>
             </View>
             <Image
-                source={{uri: imageUri}}
+                source={{uri: firstImageUri}}
                 style={styles.image}
             ></Image>
             <View style={styles.whitesmallbox}>
@@ -45,6 +46,7 @@ export default function WeekCard({item: {attributes: {completed, week, date, ima
             <AppDialog
                 visible={dialog}
                 title={'Have you completed this step?'}
+                content={<VideoPlayer source={''}/>}
                 acceptText={'Yes'}
                 cancelText={'No'}
                 onCancel={() => {

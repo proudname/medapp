@@ -1,11 +1,11 @@
-import {ApiDoc, ApiMedia, ApiResponse} from "./api";
+import {ApiDoc, ApiMedia, ApiMediaList, ApiResponse} from "./api";
 
 export type ApiPlan = ApiDoc<{
     "title": string,
     "week": number,
     "date": string,
     "completed": boolean,
-    "image": ApiMedia
+    "images": ApiMediaList
 }>
 
 export type Plan = {
@@ -13,7 +13,7 @@ export type Plan = {
     "week": number,
     "date": string,
     "completed": boolean,
-    "image": ApiMedia
+    "images": ApiMedia[]
 }
 
 export type UpdatePlanPayload = {

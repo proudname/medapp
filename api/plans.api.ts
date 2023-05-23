@@ -10,7 +10,7 @@ export const plansApi = createApi({
     endpoints: (builder) => ({
         getPlans: builder.query<GetPlansResponse, void>({
             query: () => ({
-                url: `/api/plans/my?populate=image&sort=week`,
+                url: `/api/plans/my?populate=images&sort=week`,
                 method: 'GET'
             }),
             providesTags: [{type: 'Plan', id: 'LIST'}]
